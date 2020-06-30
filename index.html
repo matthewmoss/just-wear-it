@@ -1,12 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-      <script src="p5.js"></script>
-      <script src="p5.sound.min.js"></script>
-      <link rel="stylesheet" type="text/css" href="style.css">
-      <meta charset="utf-8">
+    <script src="p5.js"></script>
+    <script src="p5.sound.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8">
   </head>
   <body>
     <script src="simulation.js"></script>
+    <div class="footer">
+      <div id="variables" class="information">
+        <div>
+          Covid Transmission Rate: <span>50%</span>
+        </div>
+        <div>
+          How many people wear masks: <span>80%</span>
+        </div>
+        <div>
+          Mask Effectiveness: <span>60%</span>
+        </div>
+      </div>
+      <div id="navigation" class="information">
+        <div>
+          <p id="title">JustWearIt.FYI</p>
+          <p><a href="#">About</a></p>
+          <p><a href="#">More</a></p>
+        </div>
+        <div>
+          <p id="scroll">Scroll To Learn More</p>
+          <svg width="10" height="19" viewBox="0 0 10 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 7L5 11L9 7" stroke="white" stroke-opacity="0.6" stroke-width="2"/>
+            <path d="M1 1L5 5L9 1" stroke="white" stroke-opacity="0.4" stroke-width="2"/>
+            <path d="M1 13L5 17L9 13" stroke="white" stroke-opacity="0.8" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="controls">
+          <p id="play-pause">Pause</p>
+          <p id="reset">Reset</p>
+          <p class="active">1x</p>
+          <p>2x</p>
+          <p>3x</p>
+        </div>
+      </div>
   </body>
 </html>
