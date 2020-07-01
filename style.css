@@ -1,6 +1,10 @@
+@font-face { font-family: Gotham; font-weight: normal; src: url('assets/gotham-bold.otf'); }
+@font-face { font-family: Gotham; font-weight: bold; src: url('assets/gotham-ultra.otf'); }
+
 html, body {
   margin: 0;
   padding: 0;
+  background-color: black;
 }
 
 @media only screen and (max-width: 600px) {
@@ -24,17 +28,16 @@ canvas {
 .information {
   display: flex;
   background-color: rgba(0, 0, 0, 1);
-  padding: 16px 12px;
+  padding: 16px 18px;
 }
 
 .information div {
   justify-content: space-around;
   flex: 1;
 
-  font-family: 'Gotham HTF';
+  font-family: Gotham, Helvetica, sans-serif;
   font-style: normal;
-  font-weight: 700;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 20px;
   color: rgba(255, 255, 255, 0.6);
 
@@ -62,13 +65,17 @@ a {
 
 .controls p {
   cursor: pointer;
+  font-size: 18px;
 }
 
 #variables {
-  background-color: #111;
+  background-color: #212121;
+  font-weight: 700;
+  font-size: 20px;
 }
 
 #title {
+  font-size: 20px;
   font-weight: 700;
 }
 
@@ -79,7 +86,7 @@ a {
 }
 
 #navigation div p {
-  padding: 0 6px;
+  padding: 0 10px;
 }
 
 #navigation div:first-child {
