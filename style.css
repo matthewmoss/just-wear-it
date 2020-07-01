@@ -4,7 +4,7 @@
 html, body {
   margin: 0;
   padding: 0;
-  background-color: black;
+  background-color: #121212;
 }
 
 @media only screen and (max-width: 600px) {
@@ -26,80 +26,94 @@ canvas {
   margin-right: 6px;
 }
 
-.information {
+.banner {
   display: flex;
-  background-color: rgba(0, 0, 0, 1);
+  background-color: #121212;
   padding: 16px 18px;
 }
 
-.information div {
+.banner div {
   justify-content: space-around;
   flex: 1;
 
   font-family: Gotham, Helvetica, sans-serif;
   font-style: normal;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 20px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.5);
 
   text-transform: uppercase;
 }
 
-.information span {
+.banner span {
   color: rgba(255, 255, 255);
   padding-bottom: 2px;
   border-bottom: 2px solid white;
 }
 
+.banner-block {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  height: 20px;
+  margin: 0 -10px;
+}
+
+.banner-block p {
+  margin: 0 10px;
+}
+
 #title,
 #scroll,
-#play-pause,
-#reset,
+#config,
 .active {
   color: white;
 }
 
 a {
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+a:hover {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .controls p {
   cursor: pointer;
-  font-size: 18px;
+  font-size: 16px;
 }
 
-#variables {
+#simulation-config {
   background-color: #212121;
-  font-weight: 700;
-  font-size: 20px;
 }
 
-#title {
-  font-size: 20px;
+#simulation-stat-primary {
+  font-size: 16px;
   font-weight: 700;
+  color: rgba(255, 255, 255, 0.7);
 }
 
-#navigation div {
-  display: flex;
-  align-items: center;
+#simulation-stat-secondary {
+  font-size: 14px;
   font-weight: 500;
 }
 
-#navigation div p {
-  padding: 0 10px;
+#title {
+  font-size: 18px;
+  font-weight: 700;
 }
 
-#navigation div:first-child {
+.banner div:first-child {
   justify-content: flex-start;
 }
-#navigation div:nth-child(2) {
+.banner div:nth-child(2) {
   justify-content: center;
 }
-#navigation div:last-child {
+.banner div:last-child {
   justify-content: flex-end;
 }
 
-.information div:first-child { text-align: left; }
-.information div:nth-child(2) { text-align: center; }
-.information div:last-child { text-align: right; }
+.banner div:first-child { text-align: left; }
+.banner div:nth-child(2) { text-align: center; }
+.banner div:last-child { text-align: right; }

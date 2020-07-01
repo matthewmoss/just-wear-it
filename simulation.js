@@ -230,6 +230,60 @@ var simulation = function(p5) {
 
 	}
 
+	// Render canvas
+	p5.draw = function() {
+		
+		// Draw background
+		if (!p5.isMasked) {
+
+			// Calculate redness as a function of current infection
+			let redAlpha = 0.95 * (p5.currentSickCount / p5.emojiCount) + 0.05; 
+			p5.background('#FCFCFC');
+			p5.fill(`rgba(255,69,69,0.0)`);
+			p5.rect(0, 0, p5.width, p5.height);
+
+		} else {
+			p5.background('#FCFCFC');
+		}
+		
+		// Config text based on mode
+		let mainTitle = p5.isMasked ? 'MASKS' : 'NO\nMASKS';
+		let titleColor = p5.isMasked ? 'rgba(202,202,202,1.0)' : 'rgba(255,45,45,1.0)';
+		let mainTitleOffset = p5.isMasked ? (p5.height / 2 - 80) : (p5.height / 2 - 106);
+		let secondaryTitleOffset = p5.isMasked ? (p5.height / 2 - 36) : (p5.height / 2 - 20);
+
+		// Display main title
+		p5.textAlign(p5.CENTER);
+		p5.textSize(36);
+		p5.textLeading(74);
+		p5.textFont(p5.ultraGothamFont);
+		p5.fill(titleColor);
+		p5.text(mainTitle, 0, mainTitleOffset, p5.width, 118);
+		
+		// Display main subtitle
+		let currentSickPercentage = Math.round((p5.currentSickCount / p5.emojiCount) * 100);
+		let totalSickPercentage = Math.round((p5.totalSickCount / p5.emojiCount) * 100);
+		let recoveredPercentage = Math.round((p5.recoveredCount / p5.emojiCount) * 100);
+		let fatalityPercentage = Math.round((p5.fatalityCount / p5.emojiCount) * 100);
+		let stats = `\n${currentSickPercentage}% SICK\n${totalSickPercentage}% CONTRACTED\n${recoveredPercentage}% RECOVERED\n${fatalityPercentage}% FATALITIES`;
+		p5.textAlign(p5.CENTER);
+		p5.textSize(22);
+		p5.textLeading(26);
+		p5.textFont(p5.boldGothamFont);
+		p5.fill(titleColor);
+		p5.text(stats, 0, secondaryTitleOffset, p5.width, 300);
+
+		// Add emoji particles
+		for(let i = 0; i < p5.particles.length; i++) {
+			p5.particles[i].moveParticle();
+			if (!p5.particles[i].isHealthy && !p5.particles[i].isDead)
+			p5.particles[i].trasmit(p5.particles, p5.transmissionRate, p5.maskEffectiveness, p5.transmissionDistance);
+			p5.particles[i].checkHealthStatus();
+			p5.particles[i].createParticle();
+		}
+
+	}
+
 	// Resets the simulation
 	p5.resetSimulation = function() {
 
@@ -292,60 +346,6 @@ var simulation = function(p5) {
 		let recoveredPercentage = Math.round((p5.recoveredCount / p5.emojiCount) * 100);
 		let fatalityPercentage = Math.round((p5.fatalityCount / p5.emojiCount) * 100);
 		p5.print(`currently sick: ${currentSickPercentage}%, total sick: ${totalSickPercentage}%, recovered: ${recoveredPercentage}%, fatality: ${fatalityPercentage}%`)
-	}
-
-	// Render canvas
-	p5.draw = function() {
-		
-		// Draw background
-		if (!p5.isMasked) {
-
-			// Calculate redness as a function of current infection
-			let redAlpha = 0.95 * (p5.currentSickCount / p5.emojiCount) + 0.05; 
-			p5.background('#FCFCFC');
-			p5.fill(`rgba(255,69,69,0.0)`);
-			p5.rect(0, 0, p5.width, p5.height);
-
-		} else {
-			p5.background('#FCFCFC');
-		}
-		
-		// Config text based on mode
-		let mainTitle = p5.isMasked ? 'MASKS' : 'NO\nMASKS';
-		let titleColor = p5.isMasked ? 'rgba(202,202,202,1.0)' : 'rgba(255,45,45,1.0)';
-		let mainTitleOffset = p5.isMasked ? (p5.height / 2 - 80) : (p5.height / 2 - 106);
-		let secondaryTitleOffset = p5.isMasked ? (p5.height / 2 - 36) : (p5.height / 2 - 20);
-
-		// Display main title
-		p5.textAlign(p5.CENTER);
-		p5.textSize(36);
-		p5.textLeading(74);
-		p5.textFont(p5.ultraGothamFont);
-		p5.fill(titleColor);
-		p5.text(mainTitle, 0, mainTitleOffset, p5.width, 118);
-		
-		// Display main subtitle
-		let currentSickPercentage = Math.round((p5.currentSickCount / p5.emojiCount) * 100);
-		let totalSickPercentage = Math.round((p5.totalSickCount / p5.emojiCount) * 100);
-		let recoveredPercentage = Math.round((p5.recoveredCount / p5.emojiCount) * 100);
-		let fatalityPercentage = Math.round((p5.fatalityCount / p5.emojiCount) * 100);
-		let stats = `\n${currentSickPercentage}% SICK\n${totalSickPercentage}% CONTRACTED\n${recoveredPercentage}% RECOVERED\n${fatalityPercentage}% FATALITIES`;
-		p5.textAlign(p5.CENTER);
-		p5.textSize(22);
-		p5.textLeading(26);
-		p5.textFont(p5.boldGothamFont);
-		p5.fill(titleColor);
-		p5.text(stats, 0, secondaryTitleOffset, p5.width, 300);
-
-		// Add emoji particles
-		for(let i = 0; i < p5.particles.length; i++) {
-			p5.particles[i].moveParticle();
-			if (!p5.particles[i].isHealthy && !p5.particles[i].isDead)
-			p5.particles[i].trasmit(p5.particles, p5.transmissionRate, p5.maskEffectiveness, p5.transmissionDistance);
-			p5.particles[i].checkHealthStatus();
-			p5.particles[i].createParticle();
-		}
-
 	}
 
 }
