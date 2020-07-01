@@ -26,6 +26,7 @@ class Particle {
     this.isHealthy = this.p5.random(0.0, 1.0) < populationHealth;
 		this.isWearingMask = this.p5.random(0.0, 1.0) < maskUtilization;
 		this.isSaved = false;
+
     if (!this.isHealthy) {
       this.infect();
     }
