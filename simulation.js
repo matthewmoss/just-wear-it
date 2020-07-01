@@ -40,9 +40,10 @@ class Particle {
     this.recoveryDuration = this.p5.random(2.0, 4.0) * secondsPerWeek;
     this.deathDuration = this.p5.random(2.0, 4.0) * secondsPerWeek;
     
-    // Start at random point
-    this.x = this.p5.random(0, this.p5.width);
-    this.y = this.p5.random(0, this.p5.height);
+		// Start at random point
+		let radius = this.r / 2;
+    this.x = this.p5.random(radius, this.p5.width - radius);
+    this.y = this.p5.random(radius, this.p5.height - radius);
 
     // Set speed
     this.xSpeed = this.p5.random(-speed, speed);
@@ -94,9 +95,10 @@ class Particle {
 
   // Move particle according to speed
   moveParticle() {
-    if (this.x < 0 || this.x > this.p5.width)
+		let radius = this.r / 2;
+    if (this.x < radius || this.x > this.p5.width - radius)
       this.xSpeed *= -1;
-    if (this.y < 0 || this.y > this.p5.height)
+    if (this.y < radius || this.y > this.p5.height - radius)
       this.ySpeed *= -1;
     
     this.x += this.xSpeed;
@@ -166,8 +168,8 @@ class Particle {
     }
       
     // Update pulse
-    this.pulseR *= 1.025;
-    this.pulseAlphaDelta -= 0.0005
+    this.pulseR *= 1.03;
+    this.pulseAlphaDelta -= 0.0003;
     this.pulseAlpha *= this.pulseAlphaDelta;
     this.pulseAlpha = this.p5.max(this.pulseAlpha, 0);
       
