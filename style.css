@@ -1,7 +1,105 @@
+@font-face { font-family: Gotham; font-weight: normal; src: url('assets/gotham-bold.otf'); }
+@font-face { font-family: Gotham; font-weight: bold; src: url('assets/gotham-ultra.otf'); }
+
 html, body {
   margin: 0;
   padding: 0;
+  background-color: black;
 }
+
+@media only screen and (max-width: 600px) {
+  canvas {
+    display: block;
+    width: 100%;
+  }
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
 canvas {
-  display: block;
+  display: inline-block;
+  width: 50%;
+  margin-right: 6px;
 }
+
+.information {
+  display: flex;
+  background-color: rgba(0, 0, 0, 1);
+  padding: 16px 18px;
+}
+
+.information div {
+  justify-content: space-around;
+  flex: 1;
+
+  font-family: Gotham, Helvetica, sans-serif;
+  font-style: normal;
+  font-size: 16px;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.6);
+
+  text-transform: uppercase;
+}
+
+.information span {
+  color: rgba(255, 255, 255);
+  padding-bottom: 2px;
+  border-bottom: 2px solid white;
+}
+
+#title,
+#scroll,
+#play-pause,
+#reset,
+.active {
+  color: white;
+}
+
+a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.controls p {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+#variables {
+  background-color: #212121;
+  font-weight: 700;
+  font-size: 20px;
+}
+
+#title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+#navigation div {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+}
+
+#navigation div p {
+  padding: 0 10px;
+}
+
+#navigation div:first-child {
+  justify-content: flex-start;
+}
+#navigation div:nth-child(2) {
+  justify-content: center;
+}
+#navigation div:last-child {
+  justify-content: flex-end;
+}
+
+.information div:first-child { text-align: left; }
+.information div:nth-child(2) { text-align: center; }
+.information div:last-child { text-align: right; }

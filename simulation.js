@@ -24,7 +24,9 @@ class Particle {
     
     // Set healthty
     this.isHealthy = this.p5.random(0.0, 1.0) < populationHealth;
-    this.isWearingMask = this.p5.random(0.0, 1.0) < maskUtilization;
+		this.isWearingMask = this.p5.random(0.0, 1.0) < maskUtilization;
+		this.isSaved = false;
+
     if (!this.isHealthy) {
       this.infect();
     }
@@ -47,10 +49,12 @@ class Particle {
     this.ySpeed = this.p5.random(-speed, speed);
     
     // Load in images
-    this.noMaskHealthyImage = this.p5.loadImage('assets/no_mask_healthy.png');
-    this.maskHealthyImage = this.p5.loadImage('assets/mask_healthy.png');
+		this.noMaskHealthyImage = this.p5.loadImage('assets/no_mask_healthy.png');
+		//this.noMaskSavedHealthyImage = this.p5.loadImage('assets/no_mask_saved.png');
+		this.maskHealthyImage = this.p5.loadImage('assets/mask_healthy.png');
+		//this.maskSavedHealthyImage = this.p5.loadImage('assets/mask_saved.png');
     this.noMaskSickImage = this.p5.loadImage('assets/no_mask_sick.png');
-    this.maskSickImage = this.p5.loadImage('assets/mask_sick.png');
+		this.maskSickImage = this.p5.loadImage('assets/mask_sick.png');
     
   }
 
@@ -64,17 +68,26 @@ class Particle {
     // Get image
     let emoji;
     if (this.isHealthy && this.isWearingMask) {
-      emoji = this.maskHealthyImage;
+			if (this.saved) {
+				emoji = this.maskSavedHealthyImage;
+			} else {
+				emoji = this.maskHealthyImage;
+			}
     } else if (!this.isHealthy && this.isWearingMask) {
       emoji = this.maskSickImage;
     } else if (this.isHealthy && !this.isWearingMask) {
-      emoji = this.noMaskHealthyImage;
+			if (this.saved) {
+				emoji = this.noMaskSavedHealthyImage;
+			} else {
+				emoji = this.noMaskHealthyImage;
+			}
     } else {
       emoji = this.noMaskSickImage;
     }
-    
+		
+		let size = this.isHealthy ? this.r : this.r;
     if (!this.isDead) {
-      this.p5.image(emoji, this.x - this.r / 2, this.y - this.r / 2, this.r, this.r);
+			this.p5.image(emoji, this.x - size / 2, this.y - size / 2, size, size);
     }
 
   }
@@ -137,7 +150,7 @@ class Particle {
   infect() {
     this.isHealthy = false;
     this.transmissionTime = Date.now();
-    this.onInfection();
+    this.onInfection(this);
   }
   
   // Send pulse
@@ -180,7 +193,8 @@ var simulation = function(p5) {
 	p5.recoveryPercentage = 0.95; // Percent of emoji that recover
 	p5.secondsPerWeek = 8.0; // Seconds per week
 	p5.speed = 2; // Speed of emoji
-	p5.size = 24;
+	p5.size = 20;
+	p5.density = 1 / 4;
 
 	// Particles
 	p5.particles = [];
@@ -193,10 +207,10 @@ var simulation = function(p5) {
 		p5.boldGothamFont = p5.loadFont('assets/gotham-bold.otf');
 		
 		// Create canvas
-		p5.createCanvas(600, 670);
+		p5.createCanvas(p5.windowWidth / 2 - 6, p5.windowHeight - 50);
 
 		// Reset emoji
-		p5.emojiCount = p5.width / 6;
+		p5.emojiCount = p5.width * p5.density;
 		for (let i = 0; i < p5.emojiCount; i++) {
 			p5.particles.push(new Particle(
 				p5,
@@ -236,25 +250,37 @@ var simulation = function(p5) {
 	}
 
 	// Called when an emoji is infected
-	p5.onInfection = function() {
+	p5.onInfection = function(particle) {
 		p5.totalSickCount++;
 		p5.currentSickCount++;
-		p5.printState();
+		let index = p5.particles.indexOf(particle);
+		if (index >= 0) {
+			p5.infectionHelper(p5.particles.indexOf(particle));
+		}
 	}
 
+	// Helper to be overridden outside the sim
+	p5.infectionHelper = function(particleIndex) {
+
+	}
+
+	// Calls outside the sim so infections can be updated in the other 
+	p5.handleInfectionInOtherSim = function(index) {
+		if (!p5.particles[index].isInfected && !p5.particles.isRecovered && !p5.particles.isDead) {
+			p5.particles[index].isSaved = true;
+		}
+	}
 
 	// Called when an emoji recovers
 	p5.onRecovery = function() {
 		p5.recoveredCount++;
 		p5.currentSickCount--;
-		p5.printState();
 	}
 
 	// Called when an emoji dies
 	p5.onFatality = function() {
 		p5.fatalityCount++;
 		p5.currentSickCount--;
-		p5.printState();
 	}
 
 	// Helper to print the state of the sim
@@ -275,7 +301,7 @@ var simulation = function(p5) {
 			// Calculate redness as a function of current infection
 			let redAlpha = 0.95 * (p5.currentSickCount / p5.emojiCount) + 0.05; 
 			p5.background('#FCFCFC');
-			p5.fill(`rgba(255,69,69,${redAlpha})`);
+			p5.fill(`rgba(255,69,69,0.0)`);
 			p5.rect(0, 0, p5.width, p5.height);
 
 		} else {
@@ -308,7 +334,7 @@ var simulation = function(p5) {
 		p5.textFont(p5.boldGothamFont);
 		p5.fill(titleColor);
 		p5.text(stats, 0, secondaryTitleOffset, p5.width, 300);
-		
+
 		// Add emoji particles
 		for(let i = 0; i < p5.particles.length; i++) {
 			p5.particles[i].moveParticle();
@@ -322,9 +348,30 @@ var simulation = function(p5) {
 
 }
 
-// Show both simulations
+// Generate a random seed so both simulations perform exactly the same
+let randomSeed =  Math.random();
+
+// Add mask simulator
 var noMaskSimulation = new p5(simulation);
-noMaskSimulation.setMaskPercentage(0.0);
+noMaskSimulation.randomSeed(randomSeed); // Use same random seed
+noMaskSimulation.setMaskPercentage(0.0); // Set mask percentage to zero
+noMaskSimulation.infectionHelper = function(particleIndex) {
+	maskSimulation.handleInfectionInOtherSim(particleIndex)
+}
 
 var maskSimulation = new p5(simulation);
-maskSimulation.setMaskPercentage(1.0);
+maskSimulation.randomSeed(randomSeed); // use same random seed
+maskSimulation.setMaskPercentage(1.0); // Set mask percentage to one
+
+// Simulation helpers
+var isPaused = false;
+function togglePause() {
+	if (isPaused) {
+		noMaskSimulation.loop();
+		maskSimulation.loop();
+	} else {
+		noMaskSimulation.noLoop();
+		maskSimulation.noLoop();
+	}
+	isPaused = !isPaused;
+}
