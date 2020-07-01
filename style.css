@@ -23,6 +23,7 @@ html, body {
 canvas {
   display: inline-block;
   width: 50%;
+  margin-right: 6px;
 }
 
 .information {
