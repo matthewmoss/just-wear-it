@@ -49,14 +49,6 @@ class Particle {
     this.xSpeed = this.p5.random(-speed, speed);
     this.ySpeed = this.p5.random(-speed, speed);
     
-    // Load in images
-		this.noMaskHealthyImage = this.p5.loadImage('assets/no_mask_healthy.png');
-		//this.noMaskSavedHealthyImage = this.p5.loadImage('assets/no_mask_saved.png');
-		this.maskHealthyImage = this.p5.loadImage('assets/mask_healthy.png');
-		//this.maskSavedHealthyImage = this.p5.loadImage('assets/mask_saved.png');
-    this.noMaskSickImage = this.p5.loadImage('assets/no_mask_sick.png');
-		this.maskSickImage = this.p5.loadImage('assets/mask_sick.png');
-    
   }
 
   // Create particle
@@ -70,20 +62,20 @@ class Particle {
     let emoji;
     if (this.isHealthy && this.isWearingMask) {
 			if (this.saved) {
-				emoji = this.maskSavedHealthyImage;
+				emoji = this.p5.maskSavedHealthyImage;
 			} else {
-				emoji = this.maskHealthyImage;
+				emoji = this.p5.maskHealthyImage;
 			}
     } else if (!this.isHealthy && this.isWearingMask) {
-      emoji = this.maskSickImage;
+      emoji = this.p5.maskSickImage;
     } else if (this.isHealthy && !this.isWearingMask) {
 			if (this.saved) {
-				emoji = this.noMaskSavedHealthyImage;
+				emoji = this.p5.noMaskSavedHealthyImage;
 			} else {
-				emoji = this.noMaskHealthyImage;
+				emoji = this.p5.noMaskHealthyImage;
 			}
     } else {
-      emoji = this.noMaskSickImage;
+      emoji = this.p5.noMaskSickImage;
     }
 		
 		let size = this.isHealthy ? this.r : this.r;
@@ -198,21 +190,28 @@ var simulation = function(p5) {
 	p5.size = 20;
 	p5.density = 1 / 4;
 
-	// Particles
-	p5.particles = [];
+	// Resets the simulation
+	p5.reset = function() {
 
-	// Setup canvas
-	p5.setup = function() {
-		
-		// Load fonts
-		p5.ultraGothamFont = p5.loadFont('assets/gotham-ultra.otf');
-		p5.boldGothamFont = p5.loadFont('assets/gotham-bold.otf');
-		
-		// Create canvas
-		p5.createCanvas(p5.windowWidth / 2 - 6, p5.windowHeight - 50);
+		// Track stats
+		p5.emojiCount = 0;
+		p5.currentSickCount = 0;
+		p5.totalSickCount = 0;
+		p5.recoveredCount = 0;
+		p5.fatalityCount = 0;
 
-		// Reset emoji
-		p5.emojiCount = p5.width * p5.density;
+		// UI Helpers
+		p5.isMasked = p5.maskPercentage > 0; // Customizes UI for sim where emojis where masks
+
+		// Add particles
+		p5.particles = [];
+		p5.addParticles();
+
+	}
+
+	// Creates particles
+	p5.addParticles = function() {
+		p5.emojiCount = p5.min(p5.width, p5.height) * p5.density;
 		for (let i = 0; i < p5.emojiCount; i++) {
 			p5.particles.push(new Particle(
 				p5,
@@ -227,6 +226,30 @@ var simulation = function(p5) {
 				p5.onFatality
 			));
 		}
+	}
+
+	// Setup canvas
+	p5.setup = function() {
+		
+		// Load fonts
+		p5.ultraGothamFont = p5.loadFont('assets/gotham-ultra.otf');
+		p5.boldGothamFont = p5.loadFont('assets/gotham-bold.otf');
+
+		// Load in images
+		p5.noMaskHealthyImage = p5.loadImage('assets/no_mask_healthy.png');
+		p5.maskHealthyImage = p5.loadImage('assets/mask_healthy.png');
+    p5.noMaskSickImage = p5.loadImage('assets/no_mask_sick.png');
+		p5.maskSickImage = p5.loadImage('assets/mask_sick.png');
+		
+		// Create canvas
+		if (p5.windowWidth > p5.windowHeight) {
+			p5.createCanvas(p5.windowWidth / 2 - 3, p5.windowHeight - 50); // vertical split
+		} else {
+			p5.createCanvas(p5.windowWidth, p5.windowHeight / 2 - 3 - 26); // horizontal split
+		}
+
+		// Add emoji
+		p5.reset()
 
 	}
 
@@ -251,11 +274,20 @@ var simulation = function(p5) {
 		let titleColor = p5.isMasked ? 'rgba(202,202,202,1.0)' : 'rgba(255,45,45,1.0)';
 		let mainTitleOffset = p5.isMasked ? (p5.height / 2 - 80) : (p5.height / 2 - 106);
 		let secondaryTitleOffset = p5.isMasked ? (p5.height / 2 - 36) : (p5.height / 2 - 20);
+		let isHorizontalSplit = p5.width > p5.height;
+		if (isHorizontalSplit) {
+			mainTitleOffset += 14;
+			secondaryTitleOffset += 14;
+		}
+		let titleSize = isHorizontalSplit ? 30 : 36;
+		let titleLeading = isHorizontalSplit ? 66 : 74;
+		let subtitleSize = isHorizontalSplit ? 18 : 22;
+		let subtitleLeading = isHorizontalSplit ? 22 : 26;
 
 		// Display main title
 		p5.textAlign(p5.CENTER);
-		p5.textSize(36);
-		p5.textLeading(74);
+		p5.textSize(titleSize);
+		p5.textLeading(titleLeading);
 		p5.textFont(p5.ultraGothamFont);
 		p5.fill(titleColor);
 		p5.text(mainTitle, 0, mainTitleOffset, p5.width, 118);
@@ -267,8 +299,8 @@ var simulation = function(p5) {
 		let fatalityPercentage = Math.round((p5.fatalityCount / p5.emojiCount) * 100);
 		let stats = `\n${currentSickPercentage}% SICK\n${totalSickPercentage}% CONTRACTED\n${recoveredPercentage}% RECOVERED\n${fatalityPercentage}% FATALITIES`;
 		p5.textAlign(p5.CENTER);
-		p5.textSize(22);
-		p5.textLeading(26);
+		p5.textSize(subtitleSize);
+		p5.textLeading(subtitleLeading);
 		p5.textFont(p5.boldGothamFont);
 		p5.fill(titleColor);
 		p5.text(stats, 0, secondaryTitleOffset, p5.width, 300);
@@ -284,25 +316,18 @@ var simulation = function(p5) {
 
 	}
 
-	// Resets the simulation
-	p5.resetSimulation = function() {
-
-		// Track stats
-		p5.emojiCount = 0;
-		p5.currentSickCount = 0;
-		p5.totalSickCount = 0;
-		p5.recoveredCount = 0;
-		p5.fatalityCount = 0;
-
-		// UI Helpers
-		p5.isMasked = p5.maskPercentage > 0; // Customizes UI for sim where emojis where masks
-
+	p5.windowResized = function() {
+		p5.reset();
+		if (p5.windowWidth > p5.windowHeight) {
+			p5.resizeCanvas(p5.windowWidth / 2 - 3, p5.windowHeight - 50); // vertical split
+		} else {
+			p5.resizeCanvas(p5.windowWidth, p5.windowHeight / 2 - 3 - 26); // horizontal split
+		}
 	}
 
 	// Sets mask percentage
 	p5.setMaskPercentage = function(maskPercentage) {
 		p5.maskPercentage = maskPercentage;
-		p5.resetSimulation();
 	}
 
 	// Called when an emoji is infected

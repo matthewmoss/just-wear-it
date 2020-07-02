@@ -7,11 +7,52 @@ html, body {
   background-color: #121212;
 }
 
+canvas {
+  display: inline-block;
+  width: 50%;
+}
+
+canvas:first-of-type {
+  margin-right: 6px;
+}
+
 @media only screen and (max-width: 600px) {
+
   canvas {
     display: block;
     width: 100%;
+    height: 50%;
   }
+
+  canvas:first-of-type {
+    margin-right: 0px;
+    margin-bottom: 6px;
+  }
+
+}
+
+@media screen and (max-width : 1920px) {
+
+  #mini-navigation {
+    display: none;
+  }
+
+}
+
+@media only screen and (max-width: 1000px) {
+
+  #navigation {
+    display: none;
+  }
+
+  #mini-navigation {
+    display: flex;
+  }
+
+  #config-section {
+    font-size: 12px;
+  }
+
 }
 
 .footer {
@@ -20,20 +61,14 @@ html, body {
   width: 100%;
 }
 
-canvas {
-  display: inline-block;
-  width: 50%;
-  margin-right: 6px;
-}
-
 .banner {
   display: flex;
   background-color: #121212;
   padding: 16px 18px;
+  justify-content: space-between;
 }
 
 .banner div {
-  justify-content: space-around;
   flex: 1;
 
   font-family: Gotham, Helvetica, sans-serif;
@@ -82,21 +117,6 @@ a:hover {
 .controls p {
   cursor: pointer;
   font-size: 16px;
-}
-
-#simulation-config {
-  background-color: #212121;
-}
-
-#simulation-stat-primary {
-  font-size: 16px;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.7);
-}
-
-#simulation-stat-secondary {
-  font-size: 14px;
-  font-weight: 500;
 }
 
 #title {
