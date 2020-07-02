@@ -192,16 +192,14 @@ var simulation = function(p5) {
 		// Scale based on screen size
 		if (p5.width < 600) {
 			p5.size = 12;
-			p5.speed = 0.8;
-			p5.density = 1 / 3.5;
+			p5.speed = 0.6;
+			p5.density = 1 / 4;
 			p5.transmissionDistance = 5.8;
-			p5.secondsPerWeek = 6.0;
 		}  else {
 			p5.size = 20;
 			p5.speed = 2;
 			p5.density = 1 / 4;
 			p5.transmissionDistance = 7;
-			p5.secondsPerWeek = 8.0; // Seconds per week
 		}
 
 		// Track stats
