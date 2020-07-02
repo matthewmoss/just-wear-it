@@ -192,8 +192,8 @@ var simulation = function(p5) {
 		// Scale based on screen size
 		if (p5.width < 600) {
 			p5.size = 12;
-			p5.speed = 1.2;
-			p5.density = 1 / 3.7;
+			p5.speed = 1.0;
+			p5.density = 1 / 3.5;
 			p5.transmissionDistance = 5.5;
 		}  else {
 			p5.size = 20;
