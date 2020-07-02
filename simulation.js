@@ -182,9 +182,10 @@ var simulation = function(p5) {
 	p5.populationHealth = 0.92; // Initial percentage of healthy people
 	p5.maskPercentage = 0.0; // Percentage of mask wearers
 	p5.transmissionRate = 0.037; // Rate of transmission
-	p5.maskEffectiveness = 0.7; // Effectiveness of mask
+	p5.maskEffectiveness = 0.6; // Effectiveness of mask
 	p5.recoveryPercentage = 0.95; // Percent of emoji that recover
 	p5.secondsPerWeek = 8.0; // Seconds per week
+	p5.transmissionDistance = 7; // Distance to transmit
 
 	// Resets the simulation
 	p5.reset = function() {
@@ -192,14 +193,14 @@ var simulation = function(p5) {
 		// Scale based on screen size
 		if (p5.width < 600) {
 			p5.size = 12;
-			p5.speed = 0.6;
-			p5.density = 1 / 4;
-			p5.transmissionDistance = 5.8;
+			p5.speed = 1.2;
+			p5.transmissionRate = 0.014;
+			p5.density = 1 / 2.8;
 		}  else {
 			p5.size = 20;
 			p5.speed = 2;
 			p5.density = 1 / 4;
-			p5.transmissionDistance = 7;
+			p5.transmissionRate = 0.037;
 		}
 
 		// Track stats
