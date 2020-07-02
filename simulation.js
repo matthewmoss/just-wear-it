@@ -194,8 +194,8 @@ var simulation = function(p5) {
 		if (p5.width < 600) {
 			p5.size = 12;
 			p5.speed = 1.2;
-			p5.transmissionRate = 0.014;
-			p5.density = 1 / 2.8;
+			p5.transmissionRate = 0.012;
+			p5.density = 1 / 2.9;
 		}  else {
 			p5.size = 20;
 			p5.speed = 2;
