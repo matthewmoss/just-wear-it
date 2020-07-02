@@ -194,7 +194,7 @@ var simulation = function(p5) {
 			p5.size = 12;
 			p5.speed = 0.8;
 			p5.density = 1 / 3.5;
-			p5.transmissionDistance = 5.5;
+			p5.transmissionDistance = 5;
 		}  else {
 			p5.size = 20;
 			p5.speed = 2;
