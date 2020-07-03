@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>😷 JustWearIt.fyi</title>
+    <title>😷 JustWearIt.FYI</title>
   </head>
   <body>
     <script src="simulation.js"></script>
@@ -14,47 +14,47 @@
       <div id="config-popover">
         <div class="config-row">
           <p id="config-header" class="config-title">Configuration</p>
-          <a id="config-save" class="config-input">Save</a>
+          <a onclick="saveConfigChanges()" id="config-save" class="config-input">Save</a>
         </div>
         <div class="config-row">
           <p class="config-title">Mask Usage Percentage</p>
-          <input type="number" class="config-input" min="10" max="100" value="100">
+          <input id="mask-percentage" type="number" class="config-input" min="10" max="100" value="100">
         </div>
         <div class="config-row">
           <p class="config-title">Mask Effectiveness</p>
-          <input type="number" class="config-input" min="1" max="100" value="70">
+          <input id="mask-effectiveness" type="number" class="config-input" min="1" max="100" value="70">
         </div>
         <div class="config-row">
           <p class="config-title">Transmission Rate</p>
-          <input type="number" class="config-input" min="1" max="100" step="0.1" value="3.7">
+          <input id="transmission-rate" type="number" class="config-input" min="1" max="100" step="0.1" value="3.7">
         </div>
         <div class="config-row">
           <p class="config-title">Transmission Distance</p>
-          <input type="number" class="config-input" min="1" max="100" value="7" step="0.5">
+          <input id="transmission-distance" type="number" class="config-input" min="1" max="100" value="7" step="0.5">
         </div>
         <div class="config-row">
           <p class="config-title">Initial Population Health</p>
-          <input type="number" class="config-input" min="1" max="100" value="92">
+          <input id="population-health" type="number" class="config-input" min="1" max="100" value="92">
         </div>
         <div class="config-row">
           <p class="config-title">Recovery Percentage</p>
-          <input type="number" class="config-input" min="1" max="100" value="95">
+          <input id="recovery-percentage" type="number" class="config-input" min="1" max="100" value="95">
         </div>
         <div class="config-row">
           <p class="config-title">Avg Illnes Duration</p>
-          <input type="number" class="config-input" min="1" max="10" value="4" step="0.1">
+          <input id="illness-duration" type="number" class="config-input" min="1" max="10" value="4" step="0.1">
         </div>
         <div class="config-row">
           <p class="config-title">Seconds Per Week</p>
-          <input type="number" class="config-input" min="1" max="20" value="8" step="0.1">
+          <input id="seconds-per-week" type="number" class="config-input" min="1" max="20" value="8" step="0.1">
         </div>
         <div class="config-row">
           <p class="config-title">Speed</p>
-          <input type="number" class="config-input" min="1" max="10" step="0.1" value="2">
+          <input id="speed" type="number" class="config-input" min="1" max="10" step="0.1" value="2">
         </div>
         <div class="config-row">
           <p class="config-title">Density</p>
-          <input type="number" class="config-input" min="1" max="100" value="25">
+          <input id="density" type="number" class="config-input" min="1" max="100" value="25">
         </div>
       </div>
       <div id="navigation" class="banner">
@@ -72,7 +72,7 @@
           </svg>
         </div>
         <div id="config-section" class="banner-block">
-          <p>100% Mask Usage, 70% Effective</p>
+          <p id="config-summary">100% Mask Usage, 70% Effective</p>
           <p onclick="toggleConfig()"><a id="config" href="#">Configure</a></p>
         </div>
       </div>
@@ -86,7 +86,7 @@
           </svg>
         </div>
         <div id="config-section" class="banner-block">
-          <p>100% Mask Usage<br>70% Effective</p>
+          <p id="config-summary-compact">100% Mask Usage<br>70% Effective</p>
           <img onclick="toggleConfig()" src="/assets/settings.svg" />
         </div>
       </div>
@@ -112,10 +112,49 @@
         let popover = document.getElementById("config-popover");
         if (popover.style.visibility === "visible") {
           popover.style.visibility = "hidden";
+          updateForConfigChange(); // Update UI for config changes
         } else {
           popover.style.visibility = "visible";
         }
-        console.log("toggle");
+      }
+
+      // Save config changes
+      function saveConfigChanges() {
+
+        // Update simulation
+        setMaskPercentage(document.getElementById("mask-percentage").value);
+        setMaskEffectiveness(document.getElementById("mask-effectiveness").value);
+        // setTransmissionRate(document.getElementById("transmission-rate").value);
+        setTransmissionDistance(document.getElementById("transmission-distance").value);
+        setPopulationHealth(document.getElementById("population-health").value);
+        setRecoveryPercentage(document.getElementById("recovery-percentage").value);
+        // setIllnessDuration(document.getElementById("illness-duration").value);
+        setSecondsPerWeek(document.getElementById("seconds-per-week").value);
+        // setSpeed(document.getElementById("speed").value);
+        // setDensity(document.getElementById("density").value);        
+
+        // Restart
+        restartSimulation();
+
+        // Hide config popover, which will update UI for config changes
+        toggleConfig()
+      }
+
+      // Update UI for config change
+      function updateForConfigChange() {
+        document.getElementById("config-summary").innerHTML = `${maskPercentage() * 100}% Mask Usage, ${maskEffectiveness() * 100}% Effective`;
+        document.getElementById("config-summary-compact").innerHTML = `${maskPercentage() * 100}% Mask Usage<br>${maskEffectiveness() * 100}% Effective`;
+
+        document.getElementById("mask-percentage").value = maskPercentage() * 100;
+        document.getElementById("mask-effectiveness").value = maskEffectiveness() * 100;
+        // document.getElementById("transmission-rate").value = transmissionRate() * 100;
+        document.getElementById("transmission-distance").value = transmissionDistance();
+        document.getElementById("population-health").value = populationHealth() * 100;
+        document.getElementById("recovery-percentage").value = recoveryPercentage() * 100;
+        // document.getElementById("illness-duration").value = recoveryPercentage();
+        document.getElementById("seconds-per-week").value = secondsPerWeek();
+        // document.getElementById("speed").value = speed();
+        // document.getElementById("density").value = density();
       }
       
     </script>

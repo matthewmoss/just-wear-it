@@ -400,7 +400,86 @@ var maskSimulation = new p5(simulation);
 maskSimulation.randomSeed(randomSeed); // use same random seed
 maskSimulation.setMaskPercentage(1.0); // Set mask percentage to one
 
-// Simulation helpers
+//
+// Simulation config functions
+//
+
+function populationHealth() {
+	return noMaskSimulation.populationHealth;
+}
+
+function setPopulationHealth(health) {
+	if (!isNumerical(health)) {
+		return;
+	}
+	noMaskSimulation.populationHealth = parseFloat(health) / 100;
+	maskSimulation.populationHealth = parseFloat(health) / 100;
+}
+
+function maskPercentage() {
+	return maskSimulation.maskPercentage;
+}
+
+function setMaskPercentage(percentage) {
+	if (!isNumerical(percentage)) {
+		return;
+	}
+	maskSimulation.maskPercentage = parseFloat(percentage) / 100;
+}
+
+function maskEffectiveness() {
+	return noMaskSimulation.maskEffectiveness;
+}
+
+function setMaskEffectiveness(percentage) {
+	if (!isNumerical(percentage)) {
+		return;
+	}
+	noMaskSimulation.maskEffectiveness = parseFloat(percentage) / 100;
+	maskSimulation.maskEffectiveness = parseFloat(percentage) / 100;
+}
+
+function recoveryPercentage() {
+	return noMaskSimulation.recoveryPercentage;
+}
+
+function setRecoveryPercentage(percentage) {
+	if (!isNumerical(percentage)) {
+		return;
+	}
+	noMaskSimulation.recoveryPercentage = parseFloat(percentage) / 100;
+	maskSimulation.recoveryPercentage = parseFloat(percentage) / 100;
+}
+
+function secondsPerWeek() {
+	return noMaskSimulation.secondsPerWeek;
+}
+
+function setSecondsPerWeek(seconds) {
+	if (!isNumerical(seconds)) {
+		return;
+	}
+	noMaskSimulation.secondsPerWeek = parseFloat(seconds);
+	maskSimulation.secondsPerWeek = parseFloat(seconds);
+}
+
+function transmissionDistance() {
+	return noMaskSimulation.transmissionDistance;
+}
+
+function setTransmissionDistance(distance) {
+	if (!isNumerical(distance)) {
+		return;
+	}
+	noMaskSimulation.transmissionDistance = parseFloat(distance);
+	maskSimulation.transmissionDistance = parseFloat(distance);
+}
+
+//
+// Simulation control functions
+//
+
+// Pause simulation
 var isPaused = false;
 function togglePause() {
 	if (isPaused) {
@@ -411,4 +490,17 @@ function togglePause() {
 		maskSimulation.noLoop();
 	}
 	isPaused = !isPaused;
+}
+
+// Restarts the simulation
+function restartSimulation() {
+	noMaskSimulation.reset();
+	maskSimulation.reset();
+}
+
+//
+// Helpers
+//
+function isNumerical(value) {
+	return !isNaN(parseFloat(value)) && isFinite(value);
 }
