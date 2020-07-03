@@ -11,17 +11,52 @@
   <body>
     <script src="simulation.js"></script>
     <div class="footer">
-      <!-- <div id="simulation-config" class="banner">
-        <div id="simulation-stat-secondary">
-          Mask Effectiveness: <span>60%</span>
+      <div id="config-popover">
+        <div class="config-row">
+          <p id="config-header" class="config-title">Configuration</p>
+          <a id="config-save" class="config-input">Save</a>
         </div>
-        <div id="simulation-stat-primary">
-          How many people wear masks: <span>80%</span>
+        <div class="config-row">
+          <p class="config-title">Mask Usage Percentage</p>
+          <input type="number" class="config-input" min="10" max="100" value="100">
         </div>
-        <div class="banner-block">
-          <p><a href="#">More Settings</a></p>
+        <div class="config-row">
+          <p class="config-title">Mask Effectiveness</p>
+          <input type="number" class="config-input" min="1" max="100" value="70">
         </div>
-      </div> -->
+        <div class="config-row">
+          <p class="config-title">Transmission Rate</p>
+          <input type="number" class="config-input" min="1" max="100" step="0.1" value="3.7">
+        </div>
+        <div class="config-row">
+          <p class="config-title">Transmission Distance</p>
+          <input type="number" class="config-input" min="1" max="100" value="7" step="0.5">
+        </div>
+        <div class="config-row">
+          <p class="config-title">Initial Population Health</p>
+          <input type="number" class="config-input" min="1" max="100" value="92">
+        </div>
+        <div class="config-row">
+          <p class="config-title">Recovery Percentage</p>
+          <input type="number" class="config-input" min="1" max="100" value="95">
+        </div>
+        <div class="config-row">
+          <p class="config-title">Avg Illnes Duration</p>
+          <input type="number" class="config-input" min="1" max="10" value="4" step="0.1">
+        </div>
+        <div class="config-row">
+          <p class="config-title">Seconds Per Week</p>
+          <input type="number" class="config-input" min="1" max="20" value="8" step="0.1">
+        </div>
+        <div class="config-row">
+          <p class="config-title">Speed</p>
+          <input type="number" class="config-input" min="1" max="10" step="0.1" value="2">
+        </div>
+        <div class="config-row">
+          <p class="config-title">Density</p>
+          <input type="number" class="config-input" min="1" max="100" value="25">
+        </div>
+      </div>
       <div id="navigation" class="banner">
         <div class="banner-block">
           <p id="title">JustWearIt.FYI</p>
@@ -38,7 +73,7 @@
         </div>
         <div id="config-section" class="banner-block">
           <p>100% Mask Usage, 70% Effective</p>
-          <p><a id="config" href="#">Configure</a></p>
+          <p onclick="toggleConfig()"><a id="config" href="#">Configure</a></p>
         </div>
       </div>
       <div id="mini-navigation" class="banner">
@@ -52,12 +87,16 @@
         </div>
         <div id="config-section" class="banner-block">
           <p>100% Mask Usage<br>70% Effective</p>
-          <img src="/assets/settings.svg" />
+          <img onclick="toggleConfig()" src="/assets/settings.svg" />
         </div>
       </div>
     </div>
 
     <script>
+
+      //
+      // Keyboard
+      //
 
       // Pause / play on spacebar
       document.addEventListener('keyup', event => {
@@ -65,6 +104,19 @@
           togglePause();
         }
       })
+
+      //
+      // Config
+      //
+      function toggleConfig() {
+        let popover = document.getElementById("config-popover");
+        if (popover.style.visibility === "visible") {
+          popover.style.visibility = "hidden";
+        } else {
+          popover.style.visibility = "visible";
+        }
+        console.log("toggle");
+      }
       
     </script>
 

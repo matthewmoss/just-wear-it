@@ -193,8 +193,8 @@ var simulation = function(p5) {
 		// Scale based on screen size
 		if (p5.width < 600) {
 			p5.size = 12;
-			p5.speed = 1.2;
-			p5.transmissionRate = 0.012;
+			p5.speed = 1.1;
+			p5.transmissionRate = 0.01;
 			p5.density = 1 / 2.9;
 		}  else {
 			p5.size = 20;
@@ -253,9 +253,9 @@ var simulation = function(p5) {
 		
 		// Create canvas
 		if (p5.windowWidth > p5.windowHeight) {
-			p5.createCanvas(p5.windowWidth / 2 - 3, p5.windowHeight - 50); // vertical split
+			p5.createCanvas(p5.windowWidth / 2 - 2, p5.windowHeight - 50); // vertical split
 		} else {
-			p5.createCanvas(p5.windowWidth, p5.windowHeight / 2 - 3 - 26); // horizontal split
+			p5.createCanvas(p5.windowWidth, p5.windowHeight / 2 - 28); // horizontal split
 		}
 
 		// Add emoji
@@ -329,7 +329,7 @@ var simulation = function(p5) {
 	p5.windowResized = function() {
 		p5.reset();
 		if (p5.windowWidth > p5.windowHeight) {
-			p5.resizeCanvas(p5.windowWidth / 2 - 3, p5.windowHeight - 50); // vertical split
+			p5.resizeCanvas(p5.windowWidth / 2 - 2, p5.windowHeight - 50); // vertical split
 		} else {
 			p5.resizeCanvas(p5.windowWidth, p5.windowHeight / 2 - 3 - 26); // horizontal split
 		}
