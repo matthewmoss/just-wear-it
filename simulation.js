@@ -227,7 +227,7 @@ var simulation = function(p5) {
 		p5.transmissionDistance = p5.transmissionDistanceScale;
 		if (p5.width < 600) {
 			p5.density *= 2.5;
-			p5.transmissionDistance = p5.transmissionDistanceScale * 0.55;
+			p5.transmissionDistance = p5.transmissionDistanceScale * 0.6;
 		}
 
 		// Track stats
