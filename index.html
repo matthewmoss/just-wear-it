@@ -33,7 +33,7 @@
           <input id="transmission-distance" type="number" class="config-input" min="1" max="100" value="7" step="0.5">
         </div>
         <div class="config-row">
-          <p class="config-title">Initial Population Health</p>
+          <p class="config-title">Initial Popation Health</p>
           <input id="population-health" type="number" class="config-input" min="1" max="100" value="92">
         </div>
         <div class="config-row">
@@ -50,11 +50,11 @@
         </div>
         <div class="config-row">
           <p class="config-title">Speed</p>
-          <input id="speed" type="number" class="config-input" min="1" max="10" step="0.1" value="2">
+          <input id="speed" type="number" class="config-input" min="1" max="10" step="1" value="2">
         </div>
         <div class="config-row">
           <p class="config-title">Density</p>
-          <input id="density" type="number" class="config-input" min="1" max="100" value="25">
+          <input id="density" type="number" class="config-input" min="1" max="100" step="1" value="25">
         </div>
       </div>
       <div id="navigation" class="banner">
@@ -100,8 +100,11 @@
 
       // Pause / play on spacebar
       document.addEventListener('keyup', event => {
+        console.log("key code: " + event.keyCode);
         if (event.keyCode == 32) {
           togglePause();
+        } else if (event.keyCode == 13) {
+          saveConfigChanges();
         }
       })
 
@@ -124,14 +127,14 @@
         // Update simulation
         setMaskPercentage(document.getElementById("mask-percentage").value);
         setMaskEffectiveness(document.getElementById("mask-effectiveness").value);
-        // setTransmissionRate(document.getElementById("transmission-rate").value);
+        setTransmissionRate(document.getElementById("transmission-rate").value);
         setTransmissionDistance(document.getElementById("transmission-distance").value);
         setPopulationHealth(document.getElementById("population-health").value);
         setRecoveryPercentage(document.getElementById("recovery-percentage").value);
-        // setIllnessDuration(document.getElementById("illness-duration").value);
+        setIllnessDuration(document.getElementById("illness-duration").value);
         setSecondsPerWeek(document.getElementById("seconds-per-week").value);
-        // setSpeed(document.getElementById("speed").value);
-        // setDensity(document.getElementById("density").value);        
+        setSpeed(document.getElementById("speed").value);
+        setDensity(document.getElementById("density").value);        
 
         // Restart
         restartSimulation();
@@ -142,19 +145,21 @@
 
       // Update UI for config change
       function updateForConfigChange() {
-        document.getElementById("config-summary").innerHTML = `${maskPercentage() * 100}% Mask Usage, ${maskEffectiveness() * 100}% Effective`;
-        document.getElementById("config-summary-compact").innerHTML = `${maskPercentage() * 100}% Mask Usage<br>${maskEffectiveness() * 100}% Effective`;
 
-        document.getElementById("mask-percentage").value = maskPercentage() * 100;
-        document.getElementById("mask-effectiveness").value = maskEffectiveness() * 100;
-        // document.getElementById("transmission-rate").value = transmissionRate() * 100;
+        document.getElementById("config-summary").innerHTML = `${maskPercentage()}% Mask Usage, ${maskEffectiveness()}% Effective`;
+        document.getElementById("config-summary-compact").innerHTML = `${maskPercentage()}% Mask Usage<br>${maskEffectiveness()}% Effective`;
+
+        document.getElementById("mask-percentage").value = maskPercentage();
+        document.getElementById("mask-effectiveness").value = maskEffectiveness();
+        document.getElementById("transmission-rate").value = transmissionRate().toFixed(1);
         document.getElementById("transmission-distance").value = transmissionDistance();
-        document.getElementById("population-health").value = populationHealth() * 100;
-        document.getElementById("recovery-percentage").value = recoveryPercentage() * 100;
-        // document.getElementById("illness-duration").value = recoveryPercentage();
+        document.getElementById("population-health").value = populationHealth();
+        document.getElementById("recovery-percentage").value = recoveryPercentage();
+        document.getElementById("illness-duration").value = illnessDuration();
         document.getElementById("seconds-per-week").value = secondsPerWeek();
-        // document.getElementById("speed").value = speed();
-        // document.getElementById("density").value = density();
+        document.getElementById("speed").value = speed();
+        document.getElementById("density").value = density().toFixed(0);
+
       }
       updateForConfigChange(); // trigger initially
       

@@ -4,7 +4,7 @@
 class Particle {
   
   // Create particle
-  constructor(p5, populationHealth, maskUtilization, recoveryPercentage, secondsPerWeek, speed, size, onInfection, onRecovery, onFatality) {
+  constructor(p5, populationHealth, maskUtilization, recoveryPercentage, secondsPerWeek, speed, size, illnessDuration, onInfection, onRecovery, onFatality) {
 		
 		// Assign p5
 		this.p5 = p5;
@@ -38,8 +38,8 @@ class Particle {
     this.isDead = false;
     
     // Calculate illness duration
-    this.recoveryDuration = this.p5.random(2.0, 4.0) * secondsPerWeek;
-    this.deathDuration = this.p5.random(2.0, 4.0) * secondsPerWeek;
+    this.recoveryDuration = this.p5.random(illnessDuration - 1, illnessDuration + 1) * secondsPerWeek;
+    this.deathDuration = this.p5.random(illnessDuration - 1, illnessDuration + 1) * secondsPerWeek;
     
 		// Start at random point
 		let radius = this.r / 2;
@@ -198,13 +198,14 @@ var simulation = function(p5) {
 	p5.maskPercentage = 0.0; // Percentage of mask wearers
 	p5.maskEffectiveness = 0.65; // Effectiveness of mask
 	p5.recoveryPercentage = 0.95; // Percent of emoji that recover
+	p5.avgIllnessDuration = 3; // Avg duration of the illness in seconds
 
 	p5.secondsPerWeek = 6.0; // Seconds per week
-	p5.transmissionRate = 0.068; // Rate of transmission
-	p5.transmissionDistance = 7; // Distance to transmit
+	p5.transmissionRate = 0.066; // Rate of transmission
+	p5.transmissionDistanceScale = 7; // Distance to transmit
 	p5.speedPercentage = 0.0025; // Speed percentage
 	p5.sizePercentage = 0.024; // Size percentage
-	p5.densityScale = 1 / 2700; // Density
+	p5.densityScale = .0004; // Density
 
 	// Helper to get major size of simulation
 	p5.majorSize = function() {
@@ -223,9 +224,10 @@ var simulation = function(p5) {
 		p5.size = p5.majorSize() * p5.sizePercentage;
 		p5.speed = p5.majorSize() * p5.speedPercentage;
 		p5.density = p5.densityScale;
+		p5.transmissionDistance = p5.transmissionDistanceScale;
 		if (p5.width < 600) {
 			p5.density *= 1.8;
-			p5.transmissionDistance *= 0.7;
+			p5.transmissionDistance = p5.transmissionDistanceScale * 0.7;
 		}
 
 		// Track stats
@@ -256,6 +258,7 @@ var simulation = function(p5) {
 				p5.secondsPerWeek,
 				p5.speed,
 				p5.size,
+				p5.avgIllnessDuration,
 				p5.onInfection,
 				p5.onRecovery,
 				p5.onFatality
@@ -429,20 +432,8 @@ maskSimulation.setMaskPercentage(0.9); // Set mask percentage to one
 // Simulation config functions
 //
 
-function populationHealth() {
-	return noMaskSimulation.populationHealth;
-}
-
-function setPopulationHealth(health) {
-	if (!isNumerical(health)) {
-		return;
-	}
-	noMaskSimulation.populationHealth = parseFloat(health) / 100;
-	maskSimulation.populationHealth = parseFloat(health) / 100;
-}
-
 function maskPercentage() {
-	return maskSimulation.maskPercentage;
+	return maskSimulation.maskPercentage * 100
 }
 
 function setMaskPercentage(percentage) {
@@ -453,7 +444,7 @@ function setMaskPercentage(percentage) {
 }
 
 function maskEffectiveness() {
-	return noMaskSimulation.maskEffectiveness;
+	return noMaskSimulation.maskEffectiveness * 100;
 }
 
 function setMaskEffectiveness(percentage) {
@@ -464,8 +455,44 @@ function setMaskEffectiveness(percentage) {
 	maskSimulation.maskEffectiveness = parseFloat(percentage) / 100;
 }
 
+function transmissionRate() {
+	return noMaskSimulation.transmissionRate * 100;
+}
+
+function setTransmissionRate(rate) {
+	if (!isNumerical(rate)) {
+		return;
+	}
+	noMaskSimulation.transmissionRate = parseFloat(rate) / 100;
+	maskSimulation.transmissionRate = parseFloat(rate) / 100;
+}
+
+function transmissionDistance() {
+	return noMaskSimulation.transmissionDistanceScale;
+}
+
+function setTransmissionDistance(distance) {
+	if (!isNumerical(distance)) {
+		return;
+	}
+	noMaskSimulation.transmissionDistanceScale = parseFloat(distance);
+	maskSimulation.transmissionDistanceScale = parseFloat(distance);
+}
+
+function populationHealth() {
+	return noMaskSimulation.populationHealth * 100;
+}
+
+function setPopulationHealth(health) {
+	if (!isNumerical(health)) {
+		return;
+	}
+	noMaskSimulation.populationHealth = parseFloat(health) / 100;
+	maskSimulation.populationHealth = parseFloat(health) / 100;
+}
+
 function recoveryPercentage() {
-	return noMaskSimulation.recoveryPercentage;
+	return noMaskSimulation.recoveryPercentage * 100;
 }
 
 function setRecoveryPercentage(percentage) {
@@ -474,6 +501,18 @@ function setRecoveryPercentage(percentage) {
 	}
 	noMaskSimulation.recoveryPercentage = parseFloat(percentage) / 100;
 	maskSimulation.recoveryPercentage = parseFloat(percentage) / 100;
+}
+
+function illnessDuration() {
+	return noMaskSimulation.avgIllnessDuration;
+}
+
+function setIllnessDuration(duration) {
+	if (!isNumerical(duration)) {
+		return;
+	}
+	noMaskSimulation.avgIllnessDuration = parseFloat(duration);
+	maskSimulation.avgIllnessDuration = parseFloat(duration);
 }
 
 function secondsPerWeek() {
@@ -488,16 +527,28 @@ function setSecondsPerWeek(seconds) {
 	maskSimulation.secondsPerWeek = parseFloat(seconds);
 }
 
-function transmissionDistance() {
-	return noMaskSimulation.transmissionDistance;
+function speed() {
+	return noMaskSimulation.speedPercentage * 10000;
 }
 
-function setTransmissionDistance(distance) {
-	if (!isNumerical(distance)) {
+function setSpeed(speed) {
+	if (!isNumerical(speed)) {
 		return;
 	}
-	noMaskSimulation.transmissionDistance = parseFloat(distance);
-	maskSimulation.transmissionDistance = parseFloat(distance);
+	noMaskSimulation.speedPercentage = parseFloat(speed) / 10000;
+	maskSimulation.speedPercentage = parseFloat(speed) / 10000;
+}
+
+function density() {
+	return noMaskSimulation.densityScale * 100000;
+}
+
+function setDensity(density) {
+	if (!isNumerical(density)) {
+		return;
+	}
+	noMaskSimulation.densityScale = parseFloat(density) / 100000;
+	maskSimulation.densityScale = parseFloat(density) / 100000;
 }
 
 //
