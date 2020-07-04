@@ -309,7 +309,7 @@ var simulation = function(p5) {
 		
 		// Config text based on mode
 		let mainTitle = p5.isMasked ? 'MASKS' : 'NO\nMASKS';
-		let titleColor = p5.isMasked ? 'rgba(202,202,202,1.0)' : 'rgba(255,45,45,1.0)';
+		let titleColor = p5.isMasked ? 'rgba(202,202,202,1.0)' : 'rgba(255,98,98,1.0)';
 		let mainTitleOffset = p5.isMasked ? (p5.height / 2 - 80) : (p5.height / 2 - 106);
 		let secondaryTitleOffset = p5.isMasked ? (p5.height / 2 - 36) : (p5.height / 2 - 20);
 		let isHorizontalSplit = p5.width > p5.height;
@@ -426,7 +426,7 @@ noMaskSimulation.infectionHelper = function(particleIndex) {
 
 var maskSimulation = new p5(simulation);
 maskSimulation.randomSeed(randomSeed); // use same random seed
-maskSimulation.setMaskPercentage(0.9); // Set mask percentage to one
+maskSimulation.setMaskPercentage(1.0); // Set mask percentage to one
 
 //
 // Simulation config functions
