@@ -101,8 +101,8 @@ class Particle {
   checkHealthStatus() {
     if (this.isHealthy || this.isRecovered || this.isDead)
       return;
-      
-    let duration = (Date.now() - this.transmissionTime) / 1000;
+			
+    let duration = (this.currentTime() - this.transmissionTime);
     if (this.willRecover && duration >= this.recoveryDuration) {
       this.isRecovered = true;
       this.isHealthy = true;
@@ -143,7 +143,7 @@ class Particle {
   // Infect
   infect() {
     this.isHealthy = false;
-    this.transmissionTime = Date.now();
+    this.transmissionTime = this.currentTime();
     this.onInfection(this);
   }
   
@@ -168,7 +168,12 @@ class Particle {
     let opacity = 0.8 * this.pulseAlpha;
     this.p5.fill(`rgba(255,56,56,${opacity})`);
     this.p5.circle(this.x,this.y,this.pulseR);
-  }
+	}
+	
+	// Helpers
+	currentTime() {
+		return this.p5.frameCount / 60;
+	}
 
 }
 
