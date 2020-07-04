@@ -226,7 +226,7 @@ var simulation = function(p5) {
 		p5.density = p5.densityScale;
 		p5.transmissionDistance = p5.transmissionDistanceScale;
 		if (p5.width < 600) {
-			p5.density *= 2.0;
+			p5.density *= 2.2;
 			p5.transmissionDistance = p5.transmissionDistanceScale * 0.7;
 		}
 
