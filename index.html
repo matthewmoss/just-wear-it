@@ -10,8 +10,8 @@
   </head>
   <body>
     <script src="simulation.js"></script>
-    <div class="footer">
-      <div id="config-popover">
+    <div id="config-popover">
+      <div id="config-popover-container">
         <div class="config-row">
           <p id="config-header" class="config-title">Configuration</p>
           <a onclick="saveConfigChanges()" id="config-save" class="config-input">Save</a>
@@ -57,11 +57,13 @@
           <input id="density" type="number" class="config-input" min="1" max="100" step="1" value="25">
         </div>
       </div>
+    </div>
+    <div class="footer">
       <div id="navigation" class="banner">
         <div class="banner-block">
           <p id="title">JustWearIt.FYI</p>
           <p id="share"><a href="#">Share</a></p>
-          <p id="donate"><a href="https://www.omaze.com/collections/coronavirus-covid-19-donations" taget="blank">Donate</a></p>
+          <p id="donate"><a href="https://www.omaze.com/collections/coronavirus-covid-19-donations" target="blank">Donate</a></p>
         </div>
         <div class="banner-block">
           <p><a id="scroll" href="#">Scroll To Learn More</a></p>

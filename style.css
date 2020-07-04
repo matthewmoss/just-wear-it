@@ -7,32 +7,16 @@ html, body {
   background-color: #121212;
 }
 
-canvas {
-  display: inline-block;
-  width: 50%;
-}
-
-canvas:first-of-type {
-  margin-right: 4px;
-}
-
-@media only screen and (max-width: 600px) {
+@media screen and (max-width : 20000px) {
 
   canvas {
-    display: block;
-    width: 100%;
-    height: 50%;
-    margin-bottom: 0px;
+    display: inline-block;
+    width: 50%;
   }
-
+  
   canvas:first-of-type {
-    margin-right: 0px;
-    margin-bottom: 2px;
+    margin-right: 4px;
   }
-
-}
-
-@media screen and (max-width : 1920px) {
 
   #mini-navigation {
     display: none;
@@ -63,8 +47,20 @@ canvas:first-of-type {
 
 @media only screen and (max-width: 600px) {
 
+  canvas {
+    display: block;
+    width: 100%;
+    height: 50%;
+    margin-bottom: 0px;
+  }
+
+  canvas:first-of-type {
+    margin-right: 0px;
+    margin-bottom: 2px;
+  }
+
   #config-popover {
-    width: 100vw;
+    width: 100%;
   }
 
 }
@@ -73,10 +69,13 @@ canvas:first-of-type {
   position: absolute;
   bottom: 0;
   background-color: rgba(36, 36, 36, 1);
-  padding: 14px 18px 0px 18px;
   margin-bottom: 52px;
   text-transform: uppercase;
   visibility: hidden;
+}
+
+#config-popover-container {
+  padding: 14px 18px 0px 18px;
 }
 
 .config-row {
@@ -133,6 +132,7 @@ input:focus {
   position: absolute;
   bottom: 0;
   width: 100%;
+  overflow: hidden;
 }
 
 .banner {

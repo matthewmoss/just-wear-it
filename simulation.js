@@ -280,7 +280,7 @@ var simulation = function(p5) {
 		p5.maskSickImage = p5.loadImage('assets/mask_sick.png');
 		
 		// Create canvas
-		if (p5.windowWidth > p5.windowHeight) {
+		if (p5.windowWidth > p5.windowHeight || p5.windowWidth > 600) {
 			p5.createCanvas(p5.windowWidth / 2 - 2, p5.windowHeight - 50); // vertical split
 		} else {
 			p5.createCanvas(p5.windowWidth, p5.windowHeight / 2 - 28); // horizontal split
@@ -356,7 +356,7 @@ var simulation = function(p5) {
 
 	p5.windowResized = function() {
 		p5.reset();
-		if (p5.windowWidth > p5.windowHeight) {
+		if (p5.windowWidth > p5.windowHeight || p5.windowWidth > 600) {
 			p5.resizeCanvas(p5.windowWidth / 2 - 2, p5.windowHeight - 50); // vertical split
 		} else {
 			p5.resizeCanvas(p5.windowWidth, p5.windowHeight / 2 - 3 - 26); // horizontal split
