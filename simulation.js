@@ -26,6 +26,7 @@ class Particle {
     this.isHealthy = this.p5.random(0.0, 1.0) < populationHealth;
 		this.isWearingMask = this.p5.random(0.0, 1.0) < maskUtilization;
 		this.isSaved = false;
+		this.isRangeEmoji = [];
 
     if (!this.isHealthy) {
       this.infect();
@@ -123,8 +124,8 @@ class Particle {
         
       // Check if in range
       let dis = this.p5.dist(this.x, this.y, element.x, element.y);
-      if (dis < transmissionDistance) {
-        
+      if (dis < transmissionDistance && !this.isRangeEmoji.includes(element)) {
+
         // Calculate likelyhood of catching it
         var likelyhood = transmissionRate;
         if (this.isWearingMask) {
@@ -132,10 +133,19 @@ class Particle {
         }
         if (this.p5.random(0, 1.0) <= likelyhood) {
           element.infect();
-          element.pulse();
-        }
+					element.pulse();
+				} else {
+					// If the transmission wasn't successful, add to in range emoji
+					// This prevents repeated tramission attempts while the emoji are within range of each other
+					this.isRangeEmoji.push(element);
+				}
         
-      }
+      } else if (this.isRangeEmoji.includes(element)) {
+
+				// If the emoji was in range but isn't any longer, then remove from isRangeEmoji so another transmission can be attempted
+				this.isRangeEmoji.splice(this.isRangeEmoji.indexOf(element), 1);
+
+			}
       
     });
   }
@@ -186,26 +196,36 @@ var simulation = function(p5) {
 	// Define config
 	p5.populationHealth = 0.92; // Initial percentage of healthy people
 	p5.maskPercentage = 0.0; // Percentage of mask wearers
-	p5.transmissionRate = 0.037; // Rate of transmission
-	p5.maskEffectiveness = 0.7; // Effectiveness of mask
+	p5.maskEffectiveness = 0.65; // Effectiveness of mask
 	p5.recoveryPercentage = 0.95; // Percent of emoji that recover
-	p5.secondsPerWeek = 8.0; // Seconds per week
+
+	p5.secondsPerWeek = 6.0; // Seconds per week
+	p5.transmissionRate = 0.068; // Rate of transmission
 	p5.transmissionDistance = 7; // Distance to transmit
+	p5.speedPercentage = 0.0025; // Speed percentage
+	p5.sizePercentage = 0.024; // Size percentage
+	p5.densityScale = 1 / 2700; // Density
+
+	// Helper to get major size of simulation
+	p5.majorSize = function() {
+		return p5.max(p5.width, p5.height);
+	}
+
+	// Size
+	p5.area = function() {
+		return p5.width * p5.height;
+	}
 
 	// Resets the simulation
 	p5.reset = function() {
 
 		// Scale based on screen size
+		p5.size = p5.majorSize() * p5.sizePercentage;
+		p5.speed = p5.majorSize() * p5.speedPercentage;
+		p5.density = p5.densityScale;
 		if (p5.width < 600) {
-			p5.size = 12;
-			p5.speed = 1.1;
-			p5.transmissionRate = 0.01;
-			p5.density = 1 / 2.9;
-		}  else {
-			p5.size = 20;
-			p5.speed = 2;
-			p5.density = 1 / 4;
-			p5.transmissionRate = 0.037;
+			p5.density *= 1.8;
+			p5.transmissionDistance *= 0.7;
 		}
 
 		// Track stats
@@ -226,7 +246,7 @@ var simulation = function(p5) {
 
 	// Creates particles
 	p5.addParticles = function() {
-		p5.emojiCount = p5.min(p5.width, p5.height) * p5.density;
+		p5.emojiCount = p5.area() * p5.density;
 		for (let i = 0; i < p5.emojiCount; i++) {
 			p5.particles.push(new Particle(
 				p5,
@@ -403,7 +423,7 @@ noMaskSimulation.infectionHelper = function(particleIndex) {
 
 var maskSimulation = new p5(simulation);
 maskSimulation.randomSeed(randomSeed); // use same random seed
-maskSimulation.setMaskPercentage(1.0); // Set mask percentage to one
+maskSimulation.setMaskPercentage(0.9); // Set mask percentage to one
 
 //
 // Simulation config functions
