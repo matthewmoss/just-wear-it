@@ -192,12 +192,19 @@ input:focus {
   user-select: none;
 }
 
+.clickable,
 a {
+  cursor: pointer;
+  user-select: none;
   text-decoration: none;
   color: rgba(255, 255, 255, 0.5);
 }
 
 a:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.clickable:hover {
   color: rgba(255, 255, 255, 0.8);
 }
 

@@ -3,12 +3,36 @@
   <head>
     <script src="p5.js"></script>
     <script src="p5.sound.min.js"></script>
+    <link rel="stylesheet" href="social-share-kit/css/social-share-kit.css" type="text/css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>😷 JustWearIt.FYI</title>
+
+    <script type="text/javascript" src="social-share-kit/js/social-share-kit.js"></script>
+    
+    <title>JustWearIt.FYI</title>
+    <link rel="icon" type="image/png" href="/assets/favicon-16.png" sizes="16x16"/>
+    <link rel="icon" type="image/png" href="/assets/favicon-32.png" sizes="32x32"/>
+    <link rel="icon" type="image/png" href="/assets/favicon-96.png" sizes="96x96"/>
+
+    <meta property="og:title" content="JustWearIt.FYI" />
+    <meta property="og:description" content="Visualize how masks help stop the spread of COVID-19" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://JustWearIt.FYI" />
+    <meta property="og:image" content="https://just-wear-it.s3-us-west-2.amazonaws.com/open-graph-image.png" />
+
   </head>
   <body>
+    <div id="share-options" class="ssk-sticky ssk-left ssk-center ssk-lg ssk-grayscale">
+      <a href="" class="ssk ssk-facebook"></a>
+      <a href="" class="ssk ssk-twitter"></a>
+      <a href="" class="ssk ssk-instagram"></a>
+      <a href="" class="ssk ssk-pinterest"></a>
+      <a href="" class="ssk ssk-linkedin"></a>
+      <a href="" class="ssk ssk-email"></a>
+      <a href="" class="ssk ssk-link"></a>
+      <a onclick="toggleShareOptions()" class="ssk ssk-close"></a>
+    </div>
     <div id="hero">
       <script src="simulation.js"></script>
       <div id="config-popover">
@@ -63,7 +87,7 @@
         <div id="navigation" class="banner">
           <div class="banner-block">
             <p id="title">JustWearIt.FYI</p>
-            <p id="share"><a href="#">Share</a></p>
+            <p id="share" class="clickable" onclick="toggleShareOptions()">Share</p>
             <p id="donate"><a href="https://www.omaze.com/collections/coronavirus-covid-19-donations" target="blank">Donate</a></p>
           </div>
           <div class="banner-block">
@@ -76,7 +100,7 @@
           </div>
           <div id="config-section" class="banner-block">
             <p id="config-summary">100% Mask Usage, 70% Effective</p>
-            <p onclick="toggleConfig()"><a id="config" href="#">Configure</a></p>
+            <p onclick="toggleConfig()" id="config" class="clickable">Configure</p>
           </div>
         </div>
         <div id="mini-navigation" class="banner">
@@ -120,7 +144,7 @@
         
         <h2 class="info-title">How else can I help?</h2>
         <div class="info-button-group">
-          <div class="info-button">Share</div>
+          <div class="info-button" onclick="toggleShareOptions()">Share</div>
           <a class="info-button" href="https://www.omaze.com/collections/coronavirus-covid-19-donations" target="blank">Donate</a>
         </div>
         
@@ -148,6 +172,19 @@
       function scrollToInfo() {
         document.getElementById('FAQ').scrollIntoView();
       }
+      
+      //
+      // Share
+      //
+      function toggleShareOptions() {
+        let shareOptions = document.getElementById("share-options");
+        if (shareOptions.style.visibility === "hidden") {
+          shareOptions.style.visibility = "visible";
+        } else {
+          shareOptions.style.visibility = "hidden";
+        }
+      }
+      toggleShareOptions();
 
       //
       // Keyboard
@@ -218,6 +255,14 @@
       }
       updateForConfigChange(); // trigger initially
       
+    </script>
+
+    <script type="text/javascript">
+      SocialShareKit.init({
+          selector: '.ssk',
+          url: 'http://JustWearIt.FYI',
+          text: 'Wearing a mask is something anyone can do to '
+      });
     </script>
 
   </body>
