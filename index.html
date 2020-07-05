@@ -26,12 +26,9 @@
     <div id="share-options" class="ssk-sticky ssk-left ssk-center ssk-lg ssk-grayscale">
       <a href="" class="ssk ssk-facebook"></a>
       <a href="" class="ssk ssk-twitter"></a>
-      <a href="" class="ssk ssk-instagram"></a>
       <a href="" class="ssk ssk-pinterest"></a>
-      <a href="" class="ssk ssk-linkedin"></a>
       <a href="" class="ssk ssk-email"></a>
-      <a href="" class="ssk ssk-link"></a>
-      <a onclick="toggleShareOptions()" class="ssk ssk-close"></a>
+      <a onclick="copyLink()" class="ssk ssk-link"></a>
     </div>
     <div id="hero">
       <script src="simulation.js"></script>
@@ -258,6 +255,12 @@
     </script>
 
     <script type="text/javascript">
+
+      function copyLink() {
+        navigator.clipboard.writeText("https://JustWearIt.FYI");
+        alert("Link copied!");
+      }
+
       SocialShareKit.init({
           selector: '.ssk',
           url: 'http://JustWearIt.FYI',
