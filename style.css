@@ -11,7 +11,7 @@ html, body {
 
 #hero {
   width: 100vw;
-  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   position: relative;
 }
 
@@ -54,11 +54,6 @@ html, body {
 }
 
 @media only screen and (max-width: 600px) {
-
-  #hero {
-    height: 94vh;
-  }
-  
 
   canvas {
     display: block;
