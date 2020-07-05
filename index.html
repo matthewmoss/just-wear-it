@@ -9,92 +9,136 @@
     <title>😷 JustWearIt.FYI</title>
   </head>
   <body>
-    <script src="simulation.js"></script>
-    <div id="config-popover">
-      <div id="config-popover-container">
-        <div class="config-row">
-          <p id="config-header" class="config-title">Configuration</p>
-          <a onclick="saveConfigChanges()" id="config-save" class="config-input">Save</a>
+    <div id="hero">
+      <script src="simulation.js"></script>
+      <div id="config-popover">
+        <div id="config-popover-container">
+          <div class="config-row">
+            <p id="config-header" class="config-title">Configuration</p>
+            <a onclick="saveConfigChanges()" id="config-save" class="config-input">Save</a>
+          </div>
+          <div class="config-row">
+            <p class="config-title">Mask Usage Percentage</p>
+            <input id="mask-percentage" type="number" class="config-input" min="10" max="100" value="100">
+          </div>
+          <div class="config-row">
+            <p class="config-title">Mask Effectiveness</p>
+            <input id="mask-effectiveness" type="number" class="config-input" min="1" max="100" value="70">
+          </div>
+          <div class="config-row">
+            <p class="config-title">Transmission Rate</p>
+            <input id="transmission-rate" type="number" class="config-input" min="1" max="100" step="0.1" value="3.7">
+          </div>
+          <div class="config-row">
+            <p class="config-title">Transmission Distance</p>
+            <input id="transmission-distance" type="number" class="config-input" min="1" max="100" value="7" step="0.5">
+          </div>
+          <div class="config-row">
+            <p class="config-title">Initial Popation Health</p>
+            <input id="population-health" type="number" class="config-input" min="1" max="100" value="92">
+          </div>
+          <div class="config-row">
+            <p class="config-title">Recovery Percentage</p>
+            <input id="recovery-percentage" type="number" class="config-input" min="1" max="100" value="95">
+          </div>
+          <div class="config-row">
+            <p class="config-title">Avg Illnes Duration</p>
+            <input id="illness-duration" type="number" class="config-input" min="1" max="10" value="4" step="0.1">
+          </div>
+          <div class="config-row">
+            <p class="config-title">Seconds Per Week</p>
+            <input id="seconds-per-week" type="number" class="config-input" min="1" max="20" value="8" step="0.1">
+          </div>
+          <div class="config-row">
+            <p class="config-title">Speed</p>
+            <input id="speed" type="number" class="config-input" min="1" max="10" step="1" value="2">
+          </div>
+          <div class="config-row">
+            <p class="config-title">Density</p>
+            <input id="density" type="number" class="config-input" min="1" max="100" step="1" value="25">
+          </div>
         </div>
-        <div class="config-row">
-          <p class="config-title">Mask Usage Percentage</p>
-          <input id="mask-percentage" type="number" class="config-input" min="10" max="100" value="100">
+      </div>
+      <div class="footer">
+        <div id="navigation" class="banner">
+          <div class="banner-block">
+            <p id="title">JustWearIt.FYI</p>
+            <p id="share"><a href="#">Share</a></p>
+            <p id="donate"><a href="https://www.omaze.com/collections/coronavirus-covid-19-donations" target="blank">Donate</a></p>
+          </div>
+          <div class="banner-block">
+            <p id="scroll" onclick="scrollToInfo()">Scroll To Learn More</p>
+            <svg id="scroll-icon" width="10" height="19" viewBox="0 0 10 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 7L5 11L9 7" stroke="white" stroke-opacity="0.6" stroke-width="2"/>
+              <path d="M1 1L5 5L9 1" stroke="white" stroke-opacity="0.4" stroke-width="2"/>
+              <path d="M1 13L5 17L9 13" stroke="white" stroke-opacity="0.8" stroke-width="2"/>
+            </svg>
+          </div>
+          <div id="config-section" class="banner-block">
+            <p id="config-summary">100% Mask Usage, 70% Effective</p>
+            <p onclick="toggleConfig()"><a id="config" href="#">Configure</a></p>
+          </div>
         </div>
-        <div class="config-row">
-          <p class="config-title">Mask Effectiveness</p>
-          <input id="mask-effectiveness" type="number" class="config-input" min="1" max="100" value="70">
-        </div>
-        <div class="config-row">
-          <p class="config-title">Transmission Rate</p>
-          <input id="transmission-rate" type="number" class="config-input" min="1" max="100" step="0.1" value="3.7">
-        </div>
-        <div class="config-row">
-          <p class="config-title">Transmission Distance</p>
-          <input id="transmission-distance" type="number" class="config-input" min="1" max="100" value="7" step="0.5">
-        </div>
-        <div class="config-row">
-          <p class="config-title">Initial Popation Health</p>
-          <input id="population-health" type="number" class="config-input" min="1" max="100" value="92">
-        </div>
-        <div class="config-row">
-          <p class="config-title">Recovery Percentage</p>
-          <input id="recovery-percentage" type="number" class="config-input" min="1" max="100" value="95">
-        </div>
-        <div class="config-row">
-          <p class="config-title">Avg Illnes Duration</p>
-          <input id="illness-duration" type="number" class="config-input" min="1" max="10" value="4" step="0.1">
-        </div>
-        <div class="config-row">
-          <p class="config-title">Seconds Per Week</p>
-          <input id="seconds-per-week" type="number" class="config-input" min="1" max="20" value="8" step="0.1">
-        </div>
-        <div class="config-row">
-          <p class="config-title">Speed</p>
-          <input id="speed" type="number" class="config-input" min="1" max="10" step="1" value="2">
-        </div>
-        <div class="config-row">
-          <p class="config-title">Density</p>
-          <input id="density" type="number" class="config-input" min="1" max="100" step="1" value="25">
+        <div id="mini-navigation" class="banner">
+          <div class="banner-block">
+            <p id="scroll" onclick="scrollToInfo()">Learn More</p>
+            <svg id="scroll-icon" width="10" height="19" viewBox="0 0 10 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 7L5 11L9 7" stroke="white" stroke-opacity="0.6" stroke-width="2"/>
+              <path d="M1 1L5 5L9 1" stroke="white" stroke-opacity="0.4" stroke-width="2"/>
+              <path d="M1 13L5 17L9 13" stroke="white" stroke-opacity="0.8" stroke-width="2"/>
+            </svg>
+          </div>
+          <div id="config-section" class="banner-block">
+            <p id="config-summary-compact">100% Mask Usage<br>70% Effective</p>
+            <img onclick="toggleConfig()" src="/assets/settings.svg" />
+          </div>
         </div>
       </div>
     </div>
-    <div class="footer">
-      <div id="navigation" class="banner">
-        <div class="banner-block">
-          <p id="title">JustWearIt.FYI</p>
-          <p id="share"><a href="#">Share</a></p>
-          <p id="donate"><a href="https://www.omaze.com/collections/coronavirus-covid-19-donations" target="blank">Donate</a></p>
+    <div class="separator"></div>
+    <div class="info" id="FAQ">
+      <div class="info-padding">
+
+        <h2 class="info-title">How do masks work?</h2>
+        <p class="info-text-block">When an infected person coughs, sneezes, or breaths out, particles disperse through the air and become very small, yet still infectious.</p>
+        <p class="info-text-block">Because these particles are so small, it's difficult to prevent other people from breathing them in. Once the particles have dispersed in the air, <span class="info-highlighted-text">only the highest quality protective gear, combined with strict fit requirements, would stop you from breathing them in.</span></p>
+        <p class="info-text-block">However, what if we could stop these particles before they disperse through the air? That's what wearing a mask does. <span class="info-highlighted-text">It stops a sick person from spreading their particles in the first place.</span></p>
+        <p class="info-text-block"><span class="info-highlighted-text">This means wearing a mask is about helping other people just as much as it's about helping yourself.</span> When you wear a mask, you're doing it to help your community. And if less people get sick, you're less likely to get sick as well.</p>
+        <p class="info-text-block">It can feel like we have no control over this situation, but wearing a mask lets <span class="info-highlighted-text"><i>anyone</i></span> contribute to making a real difference. <span class="info-highlighted-text">So just wear it.</span></p>
+
+        <h2 class="info-title">Where can I get a mask?</h2>
+        <div class="info-button-group">
+          <div class="info-button">Make Your Own</div>
+          <div class="info-button">Buy One</div>
         </div>
-        <div class="banner-block">
-          <p><a id="scroll" href="#">Scroll To Learn More</a></p>
-          <svg id="scroll-icon" width="10" height="19" viewBox="0 0 10 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 7L5 11L9 7" stroke="white" stroke-opacity="0.6" stroke-width="2"/>
-            <path d="M1 1L5 5L9 1" stroke="white" stroke-opacity="0.4" stroke-width="2"/>
-            <path d="M1 13L5 17L9 13" stroke="white" stroke-opacity="0.8" stroke-width="2"/>
-          </svg>
+
+        <h2 class="info-title">Where can I learn more?</h2>
+        <p class="info-text-block condensed-p"><a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html" target="blank">CDC - Symptom check & the latest COVID news</a></p>
+        <p class="info-text-block condensed-p"><a href="https://www.theatlantic.com/health/archive/2020/04/dont-wear-mask-yourself/610336/?scrollnoblockerrefresh=1" target="blank">The Atlantic - The Real Reason to Wear a Mask</a></p>
+        <p class="info-text-block condensed-p"><a href="https://masks4all.co" target="blank">Masks4All - Mask Research and Instructions</a></p>
+        <p class="info-text-block condensed-p"><a href="https://www.fast.ai/2020/04/13/masks-summary/" target="blank">Fast AI Mask Summary - How Masks Work</a></p>
+        
+        <h2 class="info-title">How else can I help?</h2>
+        <div class="info-button-group">
+          <div class="info-button">Share</div>
+          <div class="info-button">Donate</div>
         </div>
-        <div id="config-section" class="banner-block">
-          <p id="config-summary">100% Mask Usage, 70% Effective</p>
-          <p onclick="toggleConfig()"><a id="config" href="#">Configure</a></p>
-        </div>
-      </div>
-      <div id="mini-navigation" class="banner">
-        <div class="banner-block">
-          <p><a id="scroll" href="#">Learn More</a></p>
-          <svg id="scroll-icon" width="10" height="19" viewBox="0 0 10 19" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1 7L5 11L9 7" stroke="white" stroke-opacity="0.6" stroke-width="2"/>
-            <path d="M1 1L5 5L9 1" stroke="white" stroke-opacity="0.4" stroke-width="2"/>
-            <path d="M1 13L5 17L9 13" stroke="white" stroke-opacity="0.8" stroke-width="2"/>
-          </svg>
-        </div>
-        <div id="config-section" class="banner-block">
-          <p id="config-summary-compact">100% Mask Usage<br>70% Effective</p>
-          <img onclick="toggleConfig()" src="/assets/settings.svg" />
-        </div>
+        
+        <h2 class="info-title">Who made this site?</h2>
+        <p class="info-text-block condensed-p">This website was created by <a class="info-highlighted-text" href="https://twitter.com/thefuturematt" target="blank">Matt Moss</a> and <a class="info-highlighted-text" href="https://twitter.com/maaslalani" target="blank">Maas Lalani</a>, with advice and feedback from Zack Higgins, Theo Strauss, and more.</p>
+        <p class="info-text-block condensed-p"><span class="info-highlighted-text">Important:</span> While our simulation accounts for basic factors in COVID-19 spread, it is intended to raise awareness and should not be treated as a scientific model. You can learn more from the experts <a class="info-highlighted-text" href="https://www.preprints.org/manuscript/202004.0203/v1" target="blank">here</a>. This site was inspired by <a class="info-highlighted-text" href="https://www.theatlantic.com/health/archive/2020/04/dont-wear-mask-yourself/610336/?scrollnoblockerrefresh=1" target="blank">this article</a> in The Atlantic and by <a class="info-highlighted-text" href="https://meltingasphalt.com/interactive/outbreak/" target="blank">this interactive essay</a> by Kevin Simler.</p>
+        <p class="info-text-block condensed-p">You can find the project on <a class="info-highlighted-text" href="" target="blank">Github</a> here, where you can experiment with our p5.js simulation and contribute. If you've got any feedback or questions, email us or reach out on Twitter!</p>
       </div>
     </div>
 
     <script>
+
+      //
+      // Scrolling
+      //
+      function scrollToInfo() {
+        document.getElementById('FAQ').scrollIntoView();
+      }
 
       //
       // Keyboard

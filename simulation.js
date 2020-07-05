@@ -417,14 +417,14 @@ var simulation = function(p5) {
 let randomSeed =  Math.random();
 
 // Add mask simulator
-var noMaskSimulation = new p5(simulation);
+var noMaskSimulation = new p5(simulation, 'hero'); // Add to div with id=hero
 noMaskSimulation.randomSeed(randomSeed); // Use same random seed
 noMaskSimulation.setMaskPercentage(0.0); // Set mask percentage to zero
 noMaskSimulation.infectionHelper = function(particleIndex) {
 	maskSimulation.handleInfectionInOtherSim(particleIndex)
 }
 
-var maskSimulation = new p5(simulation);
+var maskSimulation = new p5(simulation, 'hero'); // Add to div with id=hero
 maskSimulation.randomSeed(randomSeed); // use same random seed
 maskSimulation.setMaskPercentage(1.0); // Set mask percentage to one
 
