@@ -323,6 +323,10 @@ a:hover {
     line-height: 40px;
     font-size: 18px;
   }
+
+  .info-title:first-child {
+    margin-top: 30px;
+  }
   
   .condensed-p {
     margin-bottom: 12px;
