@@ -356,6 +356,9 @@ var simulation = function(p5) {
 	}
 
 	p5.windowResized = function() {
+		if (p5.window.width < 500) {
+			return; // don't resize sim for window changes on mobile. otherwise dismissing / presenting nav bars screw things up
+		}
 		p5.reset();
 		if (p5.windowWidth > p5.windowHeight || p5.windowWidth > 600) {
 			p5.resizeCanvas(p5.windowWidth / 2 - 2, p5.windowHeight - 50); // vertical split
