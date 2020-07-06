@@ -41,7 +41,7 @@ The transmission is attempted a single time when a healthy particle comes within
 
 ## Roadmap
 
-Here's a quick overview of features we'd like to add. See Issues for more details. If you're able to help, that would be much appreciated :)
+Here's a quick overview of features we'd like to add. See [Issues](https://github.com/matthewmoss/just-wear-it/issues) for more details. If you're able to help, that would be much appreciated :)
 
 - [ ] **City Picker:** The site would pull in city data for mask usage, population density, population health, etc. and let you pick a city to simulate.
 - [ ] **Localizations:** Translate the website into different languages.
