@@ -356,7 +356,7 @@ var simulation = function(p5) {
 	}
 
 	p5.windowResized = function() {
-		if (p5.window.width < 500) {
+		if (p5.windowWidth < 500) {
 			return; // don't resize sim for window changes on mobile. otherwise dismissing / presenting nav bars screw things up
 		}
 		p5.reset();
