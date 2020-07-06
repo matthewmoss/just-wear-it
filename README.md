@@ -37,7 +37,13 @@ Note that infection likelyhood is dependent on if the *sick* particle is wearing
 
 The transmission is attempted a single time when a healthy particle comes within range of a sick particle, instead of continously while the two are in-range. While both strategies could work, the later means that slowing the speed of the particles would increase transmission rate, as they would now be in-range for longer. This doesn't work great in practice, so a single tranmission attempt is used instead. Once two particles move out of range, another transmission attempt will occur if they move back in range at a later point.
 
-## License
+## Roadmap
+
+Here's a quick overview of features we'd like to add. If you're able to help, that would be much appreciated :)
+
+- [ ] **City Picker:** The site would pull in city data for mask usage, population density, population health, etc. and let you pick a city to simulate.
+- [ ] **Localizations:** Translate the website into different languages.
+- [ ] **Custom Donation Box:** Collect donations through Stripe and split between several COVID-related charities. Haven't found a great framework for this, so currently the site links out to Omaze. 
 
 ## About
 
