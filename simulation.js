@@ -204,7 +204,7 @@ var simulation = function(p5) {
 	p5.transmissionRate = 0.066; // Rate of transmission
 	p5.transmissionDistanceScale = 7; // Distance to transmit
 	p5.speedPercentage = 0.0025; // Speed percentage
-	p5.sizePercentage = 0.024; // Size percentage
+	p5.sizePercentage = 0.030; // Size percentage
 	p5.densityScale = 0.0004; // Density
 
 	// Helper to get major size of simulation
