@@ -204,7 +204,7 @@ var simulation = function(p5) {
 	p5.transmissionRate = 0.066; // Rate of transmission
 	p5.transmissionDistanceScale = 7; // Distance to transmit
 	p5.speedPercentage = 0.0025; // Speed percentage
-	p5.sizePercentage = 0.030; // Size percentage
+	p5.sizePercentage = 0.040; // Size percentage
 	p5.densityScale = 0.0004; // Density
 
 	// Helper to get major size of simulation
@@ -310,7 +310,7 @@ var simulation = function(p5) {
 		
 		// Config text based on mode
 		let mainTitle = p5.isMasked ? 'MASKS' : 'NO\nMASKS';
-		let titleColor = p5.isMasked ? 'rgba(202,202,202,1.0)' : 'rgba(255,98,98,1.0)';
+		let titleColor = p5.isMasked ? 'rgba(176,176,176,1.0)' : 'rgba(255,98,98,1.0)';
 		let mainTitleOffset = p5.isMasked ? (p5.height / 2 - 80) : (p5.height / 2 - 106);
 		let secondaryTitleOffset = p5.isMasked ? (p5.height / 2 - 36) : (p5.height / 2 - 20);
 		let isHorizontalSplit = p5.width > p5.height;
