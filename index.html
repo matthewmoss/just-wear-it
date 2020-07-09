@@ -206,7 +206,7 @@
       let initialWidth = 0;
       let initialHeight = 0;
       function updateWindowSize() {
-        if (initialWidth === window.innerWidth && Math.abs(initialHeight - window.innerHeight) < 180) {
+        if (initialWidth === window.innerWidth && Math.abs(initialHeight - window.innerHeight) < 250) {
           return; // Only resize when the width changes. This prevents sim resize when browser UI is all that's changing.
         }
         initialWidth = window.innerWidth;
