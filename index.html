@@ -203,10 +203,18 @@
       //
       // Viewport helpers
       //
+      let initialWidth = 0;
+      let initialHeight = 0;
       function updateWindowSize() {
+        if (initialWidth === window.innerWidth && Math.abs(initialHeight - window.innerHeight) < 70) {
+          return; // Only resize when the width changes. This prevents sim resize when browser UI is all that's changing.
+        }
+        initialWidth = window.innerWidth;
+        initialHeight = window.innerHeight;
         let vh = window.innerHeight * 0.01;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
       }
+      window.addEventListener('resize', updateWindowSize);
       updateWindowSize();
 
       //
@@ -234,14 +242,14 @@
       //
 
       // Pause / play on spacebar
-      document.addEventListener('keyup', event => {
-        console.log("key code: " + event.keyCode);
-        if (event.keyCode == 32) {
-          togglePause();
-        } else if (event.keyCode == 13) {
-          saveConfigChanges();
-        }
-      })
+      // document.addEventListener('keyup', event => {
+      //   console.log("key code: " + event.keyCode);
+      //   if (event.keyCode == 32) {
+      //     togglePause();
+      //   } else if (event.keyCode == 13) {
+      //     saveConfigChanges();
+      //   }
+      // })
 
       //
       // Config

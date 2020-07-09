@@ -225,7 +225,7 @@ var simulation = function(p5) {
 		p5.speed = p5.majorSize() * p5.speedPercentage;
 		p5.density = p5.densityScale;
 		p5.transmissionDistance = p5.transmissionDistanceScale;
-		if (p5.width < 600) {
+		if (p5.windowWidth < p5.windowHeight || p5.windowWidth < 300) {
 			p5.density *= 2.5;
 			p5.size *= 1.1;
 			p5.transmissionDistance = p5.transmissionDistanceScale * 0.6;
@@ -269,6 +269,10 @@ var simulation = function(p5) {
 
 	// Setup canvas
 	p5.setup = function() {
+
+		// Remember initial width
+		p5.initialWidth = p5.windowWidth;
+		p5.initialHeight = p5.windowHeight;
 		
 		// Load fonts
 		p5.ultraGothamFont = p5.loadFont('assets/gotham-ultra.otf');
@@ -356,9 +360,11 @@ var simulation = function(p5) {
 	}
 
 	p5.windowResized = function() {
-		if (p5.windowWidth < 500) {
-			return; // don't resize sim for window changes on mobile. otherwise dismissing / presenting nav bars screw things up
+		if (p5.windowWidth === p5.initialWidth && Math.abs(p5.windowHeight - p5.initialheight) < 60) {
+			return; // don't resize if only vertical. This prevents sim resize for browser UI bars appearing and disapearing.
 		}
+		p5.initialWidth = p5.windowWidth;
+		p5.initialHeight = p5.windowHeight;
 		p5.reset();
 		if (p5.windowWidth > p5.windowHeight || p5.windowWidth > 600) {
 			p5.resizeCanvas(p5.windowWidth / 2 - 2, p5.windowHeight - 50); // vertical split
