@@ -360,7 +360,7 @@ var simulation = function(p5) {
 	}
 
 	p5.windowResized = function() {
-		if (p5.windowWidth === p5.initialWidth && Math.abs(p5.windowHeight - p5.initialheight) < 250) {
+		if (p5.windowWidth === p5.initialWidth) {
 			return; // don't resize if only vertical. This prevents sim resize for browser UI bars appearing and disapearing.
 		}
 		p5.initialWidth = p5.windowWidth;
