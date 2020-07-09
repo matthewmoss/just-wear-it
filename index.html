@@ -57,43 +57,43 @@
           </div>
           <div class="config-row">
             <p class="config-title">Mask Usage Percentage</p>
-            <input id="mask-percentage" type="number" class="config-input" min="10" max="100" value="100">
+            <input id="mask-percentage" type="text" inputmode="decimal" class="config-input" min="10" max="100" value="100" onfocus="onConfigFieldFocus()" onblur="onConfigFieldBlur()" >
           </div>
           <div class="config-row">
             <p class="config-title">Mask Effectiveness</p>
-            <input id="mask-effectiveness" type="number" class="config-input" min="1" max="100" value="70">
+            <input id="mask-effectiveness" type="text" inputmode="decimal" class="config-input" min="1" max="100" value="70" onfocus="onConfigFieldFocus()" onblur="onConfigFieldBlur()" >
           </div>
           <div class="config-row">
             <p class="config-title">Transmission Rate</p>
-            <input id="transmission-rate" type="number" class="config-input" min="1" max="100" step="0.1" value="3.7">
+            <input id="transmission-rate" type="text" inputmode="decimal" class="config-input" min="1" max="100" step="0.1" value="3.7" onfocus="onConfigFieldFocus()" onblur="onConfigFieldBlur()" >
           </div>
           <div class="config-row">
             <p class="config-title">Transmission Distance</p>
-            <input id="transmission-distance" type="number" class="config-input" min="1" max="100" value="7" step="0.5">
+            <input id="transmission-distance" type="text" inputmode="decimal" class="config-input" min="1" max="100" value="7" step="0.5" onfocus="onConfigFieldFocus()" onblur="onConfigFieldBlur()" >
           </div>
           <div class="config-row">
             <p class="config-title">Initial Popation Health</p>
-            <input id="population-health" type="number" class="config-input" min="1" max="100" value="92">
+            <input id="population-health" type="text" inputmode="decimal" class="config-input" min="1" max="100" value="92" onfocus="onConfigFieldFocus()" onblur="onConfigFieldBlur()" >
           </div>
           <div class="config-row">
             <p class="config-title">Recovery Percentage</p>
-            <input id="recovery-percentage" type="number" class="config-input" min="1" max="100" value="95">
+            <input id="recovery-percentage" type="text" inputmode="decimal" class="config-input" min="1" max="100" value="95" onfocus="onConfigFieldFocus()" onblur="onConfigFieldBlur()" >
           </div>
           <div class="config-row">
             <p class="config-title">Avg Illnes Duration</p>
-            <input id="illness-duration" type="number" class="config-input" min="1" max="10" value="4" step="0.1">
+            <input id="illness-duration" type="text" inputmode="decimal" class="config-input" min="1" max="10" value="4" step="0.1" onfocus="onConfigFieldFocus()" onblur="onConfigFieldBlur()" >
           </div>
           <div class="config-row">
             <p class="config-title">Seconds Per Week</p>
-            <input id="seconds-per-week" type="number" class="config-input" min="1" max="20" value="8" step="0.1">
+            <input id="seconds-per-week" type="text" inputmode="decimal" class="config-input" min="1" max="20" value="8" step="0.1"onfocus="onConfigFieldFocus()" onblur="onConfigFieldBlur()" >
           </div>
           <div class="config-row">
             <p class="config-title">Speed</p>
-            <input id="speed" type="number" class="config-input" min="1" max="10" step="1" value="2">
+            <input id="speed" type="text" inputmode="decimal" class="config-input" min="1" max="10" step="1" value="2" onfocus="onConfigFieldFocus()" onblur="onConfigFieldBlur()" >
           </div>
           <div class="config-row">
             <p class="config-title">Density</p>
-            <input id="density" type="number" class="config-input" min="1" max="100" step="1" value="25">
+            <input id="density" type="text" inputmode="decimal" class="config-input" min="1" max="100" step="1" value="25" onfocus="onConfigFieldFocus()" onblur="onConfigFieldBlur()" >
           </div>
         </div>
       </div>
@@ -201,6 +201,24 @@
     <script>
 
       //
+      // Text field events
+      //
+
+      // When the user focuses on a config field, clear it so they can type from scrath.
+      // For convenience, the previous value is shown as the placeholder.
+      function onConfigFieldFocus() {
+        event.srcElement.placeholder = event.srcElement.value;
+        event.srcElement.value = '';
+      }
+
+      // If the user leaves a field blank, set it back to its previous value.
+      function onConfigFieldBlur() {
+        if (event.srcElement.value === '') {
+          event.srcElement.value = event.srcElement.placeholder;
+        }
+      }
+
+      //
       // Viewport helpers
       //
       let initialWidth = 0;
@@ -241,15 +259,15 @@
       // Keyboard
       //
 
-      // Pause / play on spacebar
-      // document.addEventListener('keyup', event => {
-      //   console.log("key code: " + event.keyCode);
-      //   if (event.keyCode == 32) {
-      //     togglePause();
-      //   } else if (event.keyCode == 13) {
-      //     saveConfigChanges();
-      //   }
-      // })
+      // Listen for key events
+      document.addEventListener('keyup', event => {
+        console.log("key code: " + event.keyCode);
+        if (event.keyCode == 32) {
+          // togglePause();
+        } else if (event.keyCode == 13) {
+          // saveConfigChanges();
+        }
+      })
 
       //
       // Config
