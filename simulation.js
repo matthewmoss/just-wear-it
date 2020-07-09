@@ -580,6 +580,9 @@ function togglePause() {
 
 // Restarts the simulation
 function restartSimulation() {
+	let randomSeed = Math.random();
+	noMaskSimulation.randomSeed(randomSeed);
+	maskSimulation.randomSeed(randomSeed);
 	noMaskSimulation.reset();
 	maskSimulation.reset();
 }
