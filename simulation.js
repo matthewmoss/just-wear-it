@@ -196,7 +196,7 @@ var simulation = function(p5) {
 	// Define config
 	p5.populationHealth = 0.92; // Initial percentage of healthy people
 	p5.maskPercentage = 0.0; // Percentage of mask wearers
-	p5.maskEffectiveness = 0.65; // Effectiveness of mask
+	p5.maskEffectiveness = 0.6; // Effectiveness of mask
 	p5.recoveryPercentage = 0.95; // Percent of emoji that recover
 	p5.avgIllnessDuration = 3; // Avg duration of the illness in seconds
 
